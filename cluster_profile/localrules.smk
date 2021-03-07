@@ -1,4 +1,4 @@
-localrules: colors, export, rename_legacy_clades, upload, download_masked, download
+localrules: colors, export, rename_legacy_clades, upload, download_masked, download, download_for_cluster
 
 
 ruleorder: finalize_swiss > finalize
@@ -54,7 +54,7 @@ rule finalize_swiss:
 rule extract_cluster:
     input:
         cluster = "cluster_profile/clusters/cluster_{build_name}.txt",
-        alignment = "results/filtered.fasta"
+        alignment = _get_unified_alignment
     output:
         cluster_sample = "results/{build_name}/sample-precluster.fasta"
     run:
@@ -73,7 +73,7 @@ rule extract_cluster:
 rule filter_cluster:
     input:
         sequences = rules.extract_cluster.output.cluster_sample,
-        metadata = rules.download_metadata.output.metadata,
+        metadata = _get_unified_metadata,
         include = config["files"]["include"]
     output:
         sequences = "results/{build_name}/sample-cluster.fasta"
@@ -91,13 +91,13 @@ rule filter_cluster:
             --output {output.sequences} 2>&1 | tee {log}
         """
 
-rule download_masked:
+rule download_for_cluster:
     message: "Downloading metadata and fasta files from S3"
     output:
-        sequences = "results/filtered.fasta",
-        diagnostics = "results/sequence-diagnostics.tsv",
-        flagged = "results/flagged-sequences.tsv",
-        mutations = "results/mutation_summary.tsv"
+        sequences = "results/filtered_gisaid.fasta",
+        diagnostics = "results/sequence-diagnostics_gisaid.tsv",
+        flagged = "results/flagged-sequences_gisaid.tsv",
+        mutations = "results/mutation_summary_gisaid.tsv"
         #to_exclude = "results/to-exclude.txt"
     conda: config["conda_environment"]
     shell:

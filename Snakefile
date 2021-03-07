@@ -154,3 +154,6 @@ if "localrules" in config:
 if "custom_rules" in config:
     for rule_file in config["custom_rules"]:
         include: rule_file
+
+# print(config["builds"]["20A.EU1"])
+# print(config["subsampling"]["cluster_sampling_20A.EU1"])
