@@ -190,7 +190,7 @@ def rearrange_additional_info(additional_info):
 
 # Given the variants dictionary stored in variants.txt, apply on given place name
 def apply_variant(place, variants):
-    place_correct = place
+    place_correct = place.replace("_", " ")
     for hierarchy in variants:
         if place in variants[hierarchy]:
             if len(variants[hierarchy][place]) > 1:
@@ -586,7 +586,7 @@ def check_travel_history(info, strain_list, travel_pattern, ordering, metadata, 
 
 # Iterate over every info given and search for known patterns, or provide interactive interface for manual processing
 def check_additional_info(additional_info, path_to_config_files):
-    metadata = read_metadata(path_to_nextstrain + "ncov/data/metadata.tsv", additional_info)
+    metadata = read_metadata(path_to_nextstrain + "ncov/data/downloaded_gisaid.tsv", additional_info)
     if metadata == None:
         return []
     ordering = read_ordering_file(path_to_nextstrain + "ncov/defaults/color_ordering.tsv")
@@ -613,6 +613,14 @@ def check_additional_info(additional_info, path_to_config_files):
         print("Processing " + bold(info) + ":")
 
         while True:
+
+            if info.lower().startswith("zip code") or info.lower().startswith("zipcode"):
+                print("Auto-add comment for " + bold(info))
+                for (id, strain) in strain_list:
+                    annotations_append.append("# " + strain + "\t" + id + "\t" + info_type + ": " + info)
+                    print("Add comment for " + id)
+                break
+
 
             # Special case:
             if (info.startswith("Resident of ") or info.startswith("resident of ")) and " tested in " in info:

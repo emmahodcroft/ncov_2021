@@ -101,7 +101,7 @@ Bornem
 	Bornem
 	Hingene
 	Mariekerke
-	Weert
+	Weert BE
 Duffel
 	Duffel
 Heist-op-den-Berg
@@ -192,9 +192,9 @@ Laakdal
 	Varendonk
 	Veerle
 	Vorst
-Lille
+Lille BE
 	Gierle
-	Lille
+	Lille BE
 	Poederlee
 	Wechelderzande
 Meerhout
@@ -1203,10 +1203,10 @@ Lierneux
 	Arbrefontaine
 	Bra
 	Lierneux
-Limbourg
+Limbourg BE
 	Bilstain
 	Goé
-	Limbourg
+	Limbourg BE
 Lontzen
 	Lontzen
 	Walhorn
@@ -1497,8 +1497,7 @@ Maaseik
 	Opoeteren
 Oudsbergen
 	Ellikom
-	Gruitrode
-	Meeuwen
+	Meeuwen-Gruitrode
 	Neerglabbeek
 	Opglabbeek
 	Wijshagen
@@ -1865,6 +1864,7 @@ Chiny
 	Les Bulles
 	Suxy
 	Termes
+	Valansart
 Étalle
 	Buzenol
 	Chantemelle
