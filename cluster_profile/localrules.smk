@@ -1,4 +1,4 @@
-localrules: colors, export, rename_legacy_clades, upload, download_masked, download, download_for_cluster
+localrules: colors, export, rename_legacy_clades, upload, download_masked, download, download_for_cluster, download_filtered
 
 
 ruleorder: finalize_swiss > finalize

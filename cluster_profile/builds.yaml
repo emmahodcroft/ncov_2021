@@ -29,7 +29,7 @@ inputs:
     # masked: "s3://nextstrain-ncov-private/masked_gisaid.fasta.fasta.xz"
     # mutation_summary: "s3://nextstrain-ncov-private/mutation_summary_gisaid.tsv.xz"
     # sequence-diagnostic: "s3://nextstrain-ncov-private/sequence-diagnostics_gisaid.tsv.xz"
-    # filtered: "s3://nextstrain-ncov-private/filtered_gisaid.fasta.xz"
+    filtered: "s3://nextstrain-ncov-private/filtered_gisaid.fasta.xz"
 
 
 # Define locations for which builds should be created.
