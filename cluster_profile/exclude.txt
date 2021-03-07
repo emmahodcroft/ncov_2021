@@ -1,0 +1,137 @@
+
+
+
+# ## For Cluster analyses:
+# Two UK with seemingly wrong dates:
+England/PORT-2D2111/2020
+England/LIVE-1DD7AC/2020
+
+#Seems overdiverged compared to date:
+Italy/APU-IZSPB_321PT/2020
+Netherlands/NB-EMC-279/2020
+Australia/QLD1278/2020
+Australia/QLD1276/2020
+Sweden/20-08979/2020
+England/LIVE-DCA612/2020
+Netherlands/ZE-EMC-74/2020
+Denmark/DCGC-16747/2020
+Tunisia/19695/2020
+
+# Temporarily excluding early Spain samples until confirmed
+# EU1
+Spain/IB-IBV-99010753/2020
+Spain/IB-IBV-99010754/2020
+Spain/IB-IBV-99010756/2020
+# EU2
+Spain/IB-IBV-99010769/2020
+Spain/IB-IBV-99010761/2020
+
+# Wrong date - given as 2010
+Italy/LAZ-INMI-92/2020
+Italy/LAZ-INMI-93/2020
+Italy/LAZ-INMI-94/2020
+Italy/LAZ-INMI-95/2020
+
+# wrong date - given as 2009
+Spain/RI-IBV-99010966/2009
+
+# mixed bases which means it is sometimes 'outside' the cluster - confirmed with submitters
+Israel/CVL-46754/2020
+
+# Too diverged compared to date given - German one is 98F
+Tunisia/4874/2020
+SouthKorea/KDCA0367/2020
+Germany/SL-SU-10428507/2020 
+
+# Too diverged compared to date. Checking BioHub one with them
+USA/CA-CZB-13378/2020
+USA/CA-LACPHL-AE00059/2020
+USA/CA-LACPHL-AE00058/2020
+USA/CA-LACPHL-AE00055/2020
+
+# Too diverged compared to date...
+SouthKorea/KDCA0367/2020
+
+
+# Far too diverged compared to date - from Spain
+Spain/MD-IBV-99007119/2020
+Spain/RI-IBV-99010963/2020
+
+# too diverged compared to date - from Spain - talked to Inaki about - see email "Re: clado 20EU1 curiosidad" 24 Jan
+Spain/IB-IBV-99010765/2020
+Spain/IB-IBV-99010766/2020
+
+#overdiverged (EU2)
+Germany/SL-SU-10429159/2020
+
+#suspected wrong date - 2020 intead of 2021 - overdiverged
+USA/CA-LACPHL-AF00294/2020
+
+# over diverged compared to date - 452 USA cluster
+Mexico/ROO-InDRE_243/2020
+
+# overdiveged compared to date - 19 muts, given date March
+Spain/MD-IBV-97010024/2020
+
+# over diverged compared to date - 1 June but nested deep in EU1 diversity
+England/NOTT-246E8A/2020
+
+#overdiverged compared to date - 13 march but 20 muts
+France/IDF_HB_112003050333/2020
+
+#overdiverged - 19 muts but 14 feb
+Spain/MD-IBV-99018532/2020
+
+#overdiverged - 33 muts, march 2020 date (EU2)
+Germany/SL-SU-10429159/2020
+
+# very bad quality (EU1)
+Germany/BAV-PL-virotum_6ZA86/2020
+Germany/BAV-PL-virotum_DN6S6/2020
+
+# Names do not work well in nextstrain
+Lu'an/03/2020
+Lu'an/08/2020
+Lu'an/19/2020
+Lu'an/33/2020
+Lu'an/49/2020
+Lu'an/29/2020
+Lu'an/68/2020
+Lu'an/30/2020
+Lu'an/80/2020
+Lu'an/98/2020
+Lu'an/99/2020
+Lu'an/32/2020
+Lu'an/133/2020
+Lu'an/163/2020
+Lu'an/101/2020
+Lu'an/110/2020
+Lu'an/176/2020
+Lu'an/195/2020
+Lu'an/226/2020
+Lu'an/247/2020
+Lu'an/353/2020
+Lu'an/352/2020
+Lu'an/295/2020
+Lu'an/339/2020
+Lu'an/319/2020
+Lu'an/678/2020
+Lu'an/625/2020
+Lu'an/777/2020
+Lu'an/733/2020
+Lu'an/409/2020
+Lu'an/359/2020
+Lu'an/470/2020
+Lu'an/445/2020
+Lu'an/570/2020
+Lu'an/426/2020
+Lu'an/425/2020
+Lu'an/235/2020
+
+
+
+
+
+
+
+
