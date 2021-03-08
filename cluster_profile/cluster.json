@@ -23,13 +23,13 @@
         "time" : "05:59:00",
         "mem": "32G"
     },
-    "align": {
-        "n" : 2,
-        "mem": "32G"
+    "build_align": {
+        "n" : 8,
+        "mem": "8G"
     },
     "proximity_score":{
         "time" : "05:59:00",
         "qos": "6hours",
-        "mem": "200G"
+        "mem": "20G"
     }
 }
