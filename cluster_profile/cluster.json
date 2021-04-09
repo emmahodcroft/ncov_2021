@@ -19,9 +19,9 @@
     },
     "tree" : {
         "n": 16,
-        "qos": "6hours",
-        "time" : "05:59:00",
-        "mem": "32G"
+        "qos": "1day",
+        "mem": "64G",
+        "time" : "23:59:00"
     },
     "build_align": {
         "n" : 8,

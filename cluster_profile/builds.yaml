@@ -22,7 +22,7 @@ inputs:
     # the S3 bucket to include the origin (e.g. _gisaid).
     # Some of these files may not yet exist!
     # ------------------------------------------------------
-    # metadata: "s3://nextstrain-ncov-private/metadata_gisaid.tsv.gz"
+    #metadata: "s3://nextstrain-ncov-private/metadata_gisaid.tsv.gz"
     # sequences: "s3://nextstrain-ncov-private/sequences_gisaid.fasta.gz"
     # aligned: "s3://nextstrain-ncov-private/aligned_gisaid.fasta.xz"
     # to-exclude: "s3://nextstrain-ncov-private/to-exclude_gisaid.txt.xz"
@@ -148,6 +148,7 @@ files:
   auspice_config: "cluster_profile/auspice_config_cluster.json"
   description: "cluster_profile/description.md"
   include: "cluster_profile/include.txt"
+  subclades: "cluster_profile/bird_clades.tsv"
   # exclude file is constructed from defaults/exclude.txt cluster_profile/exclude.txt and the list of seqs in the clusters
   # see Snakefile line 79
 

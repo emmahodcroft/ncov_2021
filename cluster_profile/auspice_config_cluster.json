@@ -5,6 +5,11 @@
     {"name": "Emma Hodcroft", "url": "https://neherlab.org"},
     {"name": "Richard Neher", "url": "https://neherlab.org"}
   ],
+  "data_provenance": [
+    {
+      "name": "GISAID"
+    }
+  ],
   "colorings": [
     {
       "key": "location",
@@ -27,8 +32,8 @@
       "type": "categorical"
     },
     {
-      "key": "pangolin_lineage",
-      "title": "Pangolin Lineage",
+      "key": "pango_lineage",
+      "title": "Pango Lineage",
       "type": "categorical"
     },
     {
@@ -37,8 +42,8 @@
       "type": "categorical"
     },
     {
-      "key": "subclade_membership",
-      "title": "Emerging clade",
+      "key": "Q677_membership",
+      "title": "Q677 clade",
       "type": "categorical"
     },
     {
@@ -119,11 +124,11 @@
     "region",
     "recency",
     "clade_membership",
-    "subclade_membership",
+    "Q677_membership",
     "division",
     "location",
     "host",
-    "author"
+    "pango_lineage"
   ],
   "panels": [
     "tree",

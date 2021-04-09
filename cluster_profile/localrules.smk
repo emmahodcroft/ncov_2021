@@ -4,6 +4,7 @@ localrules: colors, export, rename_legacy_clades, upload, download_masked, downl
 ruleorder: finalize_swiss > finalize
 ruleorder: filter_cluster > subsample
 ruleorder: download_masked > filter
+ruleorder: rename_subclades_birds > rename_subclades
 #ruleorder: download_masked > mask
 #ruleorder: download_masked > diagnostic
 
@@ -110,3 +111,19 @@ rule download_for_cluster:
         #aws s3 cp s3://nextstrain-ncov-private/to-exclude.txt.xz - | xz -cdq > {output.to_exclude:q}
         #aws s3 cp s3://nextstrain-ncov-private/masked.fasta.xz - | xz -cdq > "results/masked.fasta"
         #aws s3 cp s3://nextstrain-ncov-private/masked.fasta.xz - | xz -cdq > {output.sequences:q}
+
+rule rename_subclades_birds:
+    input:
+        node_data = rules.subclades.output.clade_data
+    output:
+        clade_data = "results/{build_name}/subclades.json"
+    run:
+        import json
+        with open(input.node_data, 'r', encoding='utf-8') as fh:
+            d = json.load(fh)
+            new_data = {}
+            for k,v in d['nodes'].items():
+                if "clade_membership" in v:
+                    new_data[k] = {"Q677_membership": v["clade_membership"]}
+        with open(output.clade_data, "w") as fh:
+            json.dump({"nodes":new_data}, fh)
