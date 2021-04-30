@@ -27,6 +27,10 @@
         "n" : 8,
         "mem": "8G"
     },
+    "aa_muts_explicit": {
+        "n" : 1,
+        "mem": "32G"
+    },
     "proximity_score":{
         "time" : "05:59:00",
         "qos": "6hours",

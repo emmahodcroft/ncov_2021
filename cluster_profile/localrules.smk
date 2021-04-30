@@ -1,4 +1,4 @@
-localrules: colors, export, rename_legacy_clades, upload, download_masked, download, download_for_cluster, download_filtered
+localrules: colors, upload, download_masked, download, download_for_cluster, download_filtered
 
 
 ruleorder: finalize_swiss > finalize
@@ -95,7 +95,7 @@ rule filter_cluster:
 rule download_for_cluster:
     message: "Downloading metadata and fasta files from S3"
     output:
-        sequences = "results/filtered_gisaid.fasta",
+        sequences = "results/precomputed-filtered_gisaid.fasta",
         diagnostics = "results/sequence-diagnostics_gisaid.tsv",
         flagged = "results/flagged-sequences_gisaid.tsv",
         mutations = "results/mutation_summary_gisaid.tsv"
