@@ -89,6 +89,12 @@ Germany/SL-SU-10429159/2020
 Germany/BAV-PL-virotum_6ZA86/2020
 Germany/BAV-PL-virotum_DN6S6/2020
 
+#over diverged EU1
+Italy/CAM-CRGS-544/2020
+
+#over diverged EU2
+Netherlands/ZH-EMC-1944/2020
+
 # Names do not work well in nextstrain
 Lu'an/03/2020
 Lu'an/08/2020
@@ -128,10 +134,11 @@ Lu'an/426/2020
 Lu'an/425/2020
 Lu'an/235/2020
 
+# Random sequence, shouldn't even be in EU1, but throwing off dating
+Australia/VIC947/2020
 
-
-
-
+# Seems overdiverged compared to date
+Netherlands/NB-EMC-849/2020
 
 
 

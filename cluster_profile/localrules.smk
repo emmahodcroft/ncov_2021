@@ -1,9 +1,10 @@
-localrules: colors, export, rename_legacy_clades, upload, download_masked, download
+localrules: colors, upload, download_masked, download, download_for_cluster, download_filtered
 
 
 ruleorder: finalize_swiss > finalize
 ruleorder: filter_cluster > subsample
 ruleorder: download_masked > filter
+ruleorder: rename_subclades_birds > rename_subclades
 #ruleorder: download_masked > mask
 #ruleorder: download_masked > diagnostic
 
@@ -54,7 +55,7 @@ rule finalize_swiss:
 rule extract_cluster:
     input:
         cluster = "cluster_profile/clusters/cluster_{build_name}.txt",
-        alignment = "results/filtered.fasta"
+        alignment = _get_unified_alignment
     output:
         cluster_sample = "results/{build_name}/sample-precluster.fasta"
     run:
@@ -73,7 +74,7 @@ rule extract_cluster:
 rule filter_cluster:
     input:
         sequences = rules.extract_cluster.output.cluster_sample,
-        metadata = rules.download_metadata.output.metadata,
+        metadata = _get_unified_metadata,
         include = config["files"]["include"]
     output:
         sequences = "results/{build_name}/sample-cluster.fasta"
@@ -91,13 +92,13 @@ rule filter_cluster:
             --output {output.sequences} 2>&1 | tee {log}
         """
 
-rule download_masked:
+rule download_for_cluster:
     message: "Downloading metadata and fasta files from S3"
     output:
-        sequences = "results/filtered.fasta",
-        diagnostics = "results/sequence-diagnostics.tsv",
-        flagged = "results/flagged-sequences.tsv",
-        mutations = "results/mutation_summary.tsv"
+        sequences = "results/precomputed-filtered_gisaid.fasta",
+        diagnostics = "results/sequence-diagnostics_gisaid.tsv",
+        flagged = "results/flagged-sequences_gisaid.tsv",
+        mutations = "results/mutation_summary_gisaid.tsv"
         #to_exclude = "results/to-exclude.txt"
     conda: config["conda_environment"]
     shell:
@@ -110,3 +111,19 @@ rule download_masked:
         #aws s3 cp s3://nextstrain-ncov-private/to-exclude.txt.xz - | xz -cdq > {output.to_exclude:q}
         #aws s3 cp s3://nextstrain-ncov-private/masked.fasta.xz - | xz -cdq > "results/masked.fasta"
         #aws s3 cp s3://nextstrain-ncov-private/masked.fasta.xz - | xz -cdq > {output.sequences:q}
+
+rule rename_subclades_birds:
+    input:
+        node_data = rules.subclades.output.clade_data
+    output:
+        clade_data = "results/{build_name}/subclades.json"
+    run:
+        import json
+        with open(input.node_data, 'r', encoding='utf-8') as fh:
+            d = json.load(fh)
+            new_data = {}
+            for k,v in d['nodes'].items():
+                if "clade_membership" in v:
+                    new_data[k] = {"Q677_membership": v["clade_membership"]}
+        with open(output.clade_data, "w") as fh:
+            json.dump({"nodes":new_data}, fh)
