@@ -139,6 +139,11 @@ Australia/VIC947/2020
 
 # Seems overdiverged compared to date
 Netherlands/NB-EMC-849/2020
+Spain/IB-HUSE-00001/2020
+USA/NMDOH-2021083688/2020
+Spain/VC-IBV-99028305/2020
+Spain/VC-IBV-99028301/2020
 
-
-
+# Overdiverged
+USA/TN-UT2050/2020
+USA/TN-UT2063/2020
