@@ -152,6 +152,12 @@ files:
   # exclude file is constructed from defaults/exclude.txt cluster_profile/exclude.txt and the list of seqs in the clusters
   # see Snakefile line 79
 
+# TreeTime settings
 refine:
+  root: "Wuhan/Hu-1/2019 Wuhan/WH01/2019" #EPI_ISL_402125  EPI_ISL_406798
+  clock_rate: 0.0008
+  clock_std_dev: 0.0004
+  coalescent: "opt"
+  date_inference: "marginal"
+  divergence_unit: "mutations"
   clock_filter_iqd: 0
-  
