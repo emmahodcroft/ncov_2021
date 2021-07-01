@@ -1904,3 +1904,528 @@ USA/NV-NSPHL-NV2047306/2020
 Indonesia/JI-RSDS-RCVTD-UNAIR-35-C/2020
 Israel/CVL4659/2020
 SriLanka/CDR-SL7066/2020
+
+# divergence, see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1617921564199000
+Kazakhstan/124637/2020
+Kazakhstan/6294/2020
+Italy/LOM-Pavia-81705/2020
+Australia/SAP633/2020
+Australia/VIC14510/2020
+
+# Date before clade
+USA/MA-MASPHL-02862/2020
+USA/WV-WVU-WV090723/2020
+
+# divergence; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1618262398232100
+Australia/VIC10338/2020
+Germany/SL-SU-10429159/2020
+Germany/SL-SU-10428507/2020
+India/TG-CDFD-N5338/2020
+India/MH-NCCS-113349/2020
+India/MH-GA91/2020
+India/MH-NIV-9127/2020
+India/UT-AR49/2020
+India/HR-NIBG-TF75/2020
+Israel/CVL-n-6731/2020
+Kazakhstan/125375/2020
+Netherlands/ZH-EMC-1944/2020
+Panama/GMI-PA461379/2020
+Panama/GMI-PA499/2020
+Panama/GMI-PABT1907/2020
+Panama/334239/2020
+Panama/334396/2020
+Panama/GMI-PA339770/2020
+Panama/GMI-PA395537/2020
+Panama/GMI-PACH301/2020
+Panama/GMI-PA341357/2020
+Panama/GMI-PA437394/2020
+Panama/GMI-PA928/2020
+Panama/GMI-PA345576/2020
+Panama/GMI-PA980/2020
+Panama/GMI-PACH6445/2020
+Panama/GMI-PA368022/2020
+Panama/GMI-PABT1918/2020
+Panama/GMI-PA465514/2020
+Spain/CN-ISCIII-201810/2020
+Shandong/LY001-2/2020
+Sweden/20-51765/2020
+USA/WA-UW-8510/2020
+
+# divergence; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1618438552259300
+SouthKorea/KDCA1470/2021
+Indonesia/JK-NIHRD-MI2103283/2021
+SouthKorea/KDCA1417/2020
+Mexico/SIN_CIAD_S0148/2020
+USA/WA-UW-13330/2020
+USA/WA-UW-13381/2020
+USA/WA-UW-13397/2020
+USA/WA-UW-2780/2020
+USA/WA-UW-3611/2020
+USA/WA-UW-4127/2020
+Panama/GMI-PA344779/2020
+
+# date too early for clade
+SouthAfrica/Tygerberg_650/2020
+
+# date too early for clade, see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1618554314280300
+SouthKorea/KDCA0367/2020
+
+# Dates too early
+Spain/CL-COV00781/2020
+USA/AZ-TG808431/2020
+USA/AZ-TG808802/2020
+
+# Divergence
+CzechRepublic/LV11610/2021
+Panama/GMI-PAA676/2020
+Panama/GMI-PACH3141/2020
+
+# Overdivergent; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1618960723320800
+Panama/GMI-PABT2447/2020
+Shandong/2020C1240152/2020
+Slovenia/17-055168-CE/2020
+
+# Divergence, see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1619022249327500
+Kazakhstan/125374/2020
+
+# Divergence, see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1619131293335500
+Panama/GMI-PA979/2020
+Spain/AN-ISCIII-201273/2020
+BosniaandHerzegovina/AGCOB841/2021
+Brazil/RJ-IC01044_57-20/2020
+Sweden/20-08339/2020
+India/MH-NIV-6285/2020
+Mexico/BCN-ALSR-8431/2020
+SaudiArabia/KAUST-MAKKAH186/2020
+HongKong/HKPU70-1302/2020
+India/MH-NIV-QC-1377/2020
+BosniaandHerzegovina/02-BanjaLuka/2020
+Kazakhstan/6284/2020
+Netherlands/ZH-EMC-1930/2020
+
+# lab mouse
+mouse/USA/IA-N501Y-MA30/2021
+
+# wrong date; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1619220219342700
+Canada/NS-NML-2284/2020
+
+# Divergence; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1619297565347800
+Panama/GMI-PA963/2020
+Panama/GMI-PABT1906/2020
+Germany/BW-UKT-a021/2020
+India/MH-NCCS-87458/2020
+Italy/CAM-IZSM-115298/2020
+Israel/CVL-n25907/2020
+Lebanon/S10_768/2020
+Panama/GMI-PACH6313/2020
+
+# Canada Feb 2020 dates; probably misdated; Qatar over diverged; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1619464498366900
+Qatar/QA-QU_18-10-B12/2020
+Qatar/QA-QU_18-10-E12/2020
+Canada/QC-L00324380001/2020
+Canada/QC-L00324383001/2020
+Canada/QC-L00324385001/2020
+Canada/QC-L00324388001/2020
+Canada/QC-L00324389001/2020
+Canada/QC-L00324391001/2020
+Canada/QC-L00324397001/2020
+Canada/QC-L00324399001/2020
+Canada/QC-L00324401001/2020
+Canada/QC-L00324403001/2020
+
+# Date too early for clade, see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1619678934393000
+Germany/BY-MVP-000004014/2020
+Poland/WGS-CoV_PZH-LUM-0035/2021
+Poland/WGS-CoV_PZH-LUM-0036/2021
+
+# Divergence; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1619654818389300
+Kazakhstan/123641/2020
+Kazakhstan/125372/2020
+Kazakhstan/125377/2020
+France/PAC-IHUCOVID-2800/2020
+Switzerland/GE-ETHZ-200011/2020
+Egypt/MASRI-C4-025/2020
+Gambia/22138/2020
+Ireland/G-NVRL-72IRL10884/2020
+
+# Date before clade
+USA/CA-SEARCH-17627/2020
+
+# Duplicate
+EPI_ISL_1804614
+
+# divergence; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1620068808435700
+Indonesia/SG-NIHRD-PME21007997/2020
+Morocco/ouar254/2020
+USA/CA-CDC-1/2020
+USA/CO-CDPHE-2007152328/2020
+
+# divergence; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1620169932446500
+Germany/BAV-PL-virotum_B6HEM/2020
+SaudiArabia/545/2020
+Senegal/THI-KHO-0333/2020
+Ireland/D-NVRL-g20IRL77933/2020
+CzechRepublic/VIR-64/2021
+Netherlands/ZH-EMC-1943/2020
+
+# duplicate determined from additional info: Australia/QLD1516/2021  EPI_ISL_1803794 additional_host_info: Specimen source - original patient sample sequence EPI_ISL_1300524, sequence hCoV-19/Australia/QLD1496/2021
+Australia/QLD1516/2021
+
+# divergence; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1620344639478100
+Senegal/SN-TH-TIV-2176/2021
+Germany/SL-SU-10428084/2020
+Ireland/LH-NVRL-g20IRL08005/2020
+Germany/SL-SU-10427230/2020
+USA/NV-NSPHL-357909/2020
+USA/TX-HMH-1344/2020
+
+# Sample date before clade
+USA/TN-UT2050/2020
+USA/TN-UT2063/2020
+Japan/Donner380/2020
+
+# The following additional info was interpreted to mean that each of these sequences was a duplicate (second sample):
+# Brazil/GO-HLAGYN-1354344_R2/2021 EPI_ISL_2017447 additional_host_info: infection case second episode / first sample (P. 1169409) - exclude "second sample" (same date)
+Brazil/GO-HLAGYN-1354344_R2/2021
+# Brazil/GO-HLAGYN-1520715_R2/2021 EPI_ISL_2017324 additional_host_info: infection case second episode / first sample (P.1088252) - exclude "second sample" (same date)
+Brazil/GO-HLAGYN-1520715_R2/2021
+# Brazil/GO-HLAGYN-1586463_R2/2021 EPI_ISL_2017282 additional_host_info: infection case second episode / first sample (1031607) - exclude 1586463 due to later date
+Brazil/GO-HLAGYN-1586463_R2/2021
+# Brazil/GO-HLAGYN-1623988_R2/2021	EPI_ISL_2187985	additional_host_info: Post-vaccination reinfection, infection case seconde episode / first sample (855822) - exclude 855822 due to later date
+Brazil/GO-HLAGYN-855822/2021
+
+# Sample date before clade
+Spain/VC-IBV-99028301/2020
+Spain/VC-IBV-99028305/2020
+USA/TX-CDC-4061563-001/2020
+
+# Divergence; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1620967910048000
+Japan/Donner381/2020
+Australia/SA0633/2020
+Panama/GMI-PACH6448/2020
+Brazil/SP-2388/2020
+Brazil/SP-2389/2020
+
+# Divergence
+USA/WA-UW-488/2020
+Germany/SL-SU-10427535/2020
+
+# S1 mutations; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1621370263017600
+USA/TX-HMH-MCoV-25244/2021
+
+# Divergence; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1621459450055600
+Ecuador/USFQ-1325/2021
+India/GJ-ICMR-NIV-INSACOG-GSEQ-92/2021
+Indonesia/JK-NIHRD-MI2104087/2021
+Gambia/19140/2021
+India/GJ-GBRC522b/2020
+Latvia/445/2021
+Japan/Donner379/2020
+Japan/Donner382/2020
+
+# wrong date probably; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1621533304060300
+Poland/NIPH-NIH_ECDC-4488/2021
+
+# duplicates; see additional info below.
+# Japan/TY10-395-P1/2021 EPI_ISL_2158612 additional_host_info: Accession ID of original sequence is EPI_ISL_1927433.$
+Japan/TY10-395-P1/2021
+# Japan/TY11-330-P1/2021 EPI_ISL_2158613 additional_host_info: Accession ID of original sequence is EPI_ISL_1927438.$
+Japan/TY11-330-P1/2021
+# Japan/TY11-908-P1/2021 EPI_ISL_2158614 additional_host_info: Accession ID of original sequence is EPI_ISL_1927417.$
+Japan/TY11-908-P1/2021
+# Japan/TY11-912-P1/2021 EPI_ISL_2158615 additional_host_info: Accession ID of original sequence is EPI_ISL_1927845.$
+Japan/TY11-912-P1/2021
+# Japan/TY11-917-P1/2021 EPI_ISL_2158616 additional_host_info: Accession ID of original sequence is EPI_ISL_1927423.$
+Japan/TY11-917-P1/2021
+# Japan/TY11-927-P1/2021 EPI_ISL_2158617 additional_host_info: Accession ID of original sequence is EPI_ISL_1927424.$
+Japan/TY11-927-P1/2021
+# Japan/TY8-005-P0/2021 EPI_ISL_2158606 additional_host_info: Accession ID of original sequence is EPI_ISL_1128142.$
+Japan/TY8-005-P0/2021
+# Japan/TY8-008-P0/2021 EPI_ISL_2158607 additional_host_info: Accession ID of original sequence is EPI_ISL_1128143.$
+Japan/TY8-008-P0/2021
+# Japan/TY8-187-P0/2021 EPI_ISL_2158608 additional_host_info: Accession ID of original sequence is EPI_ISL_1131135.$
+Japan/TY8-187-P0/2021
+# Japan/TY8-689-P0/2021 EPI_ISL_2158605 additional_host_info: Accession ID of original sequence is EPI_ISL_1425704.$
+Japan/TY8-689-P0/2021
+# Japan/TY8-995-P0/2021 EPI_ISL_2158609 additional_host_info: Accession ID of original sequence is EPI_ISL_1198824.$
+Japan/TY8-995-P0/2021
+# Japan/TY9-344-P0/2021 EPI_ISL_2158610 additional_host_info: Accession ID of original sequence is EPI_ISL_1425611$
+Japan/TY9-344-P0/2021
+# Japan/TY9-435-P0/2021 EPI_ISL_2158611 additional_host_info: Accession ID of original sequence is EPI_ISL_1926894.$
+Japan/TY9-435-P0/2021
+
+# divergence, odd mutations; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1621572185067000
+Togo/C5951/2021
+Togo/C6149/2021
+Australia/VIC16342/2020
+Australia/VIC7953/2020
+
+# excess S1 mutations; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1621627646088600
+SriLanka/KDU8760/2021
+
+# divergence; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1621628225089500
+Germany/BY-ChVir-1019/2020
+India/GJ-GBRC213a/2020
+India/HP-278/2020
+Indonesia/GO-NIHRD-PME20210/2020
+Indonesia/NB-NIHRD-WGS02319/2021
+Panama/GMI-PA911/2020
+Tunisia/COV1339/2020
+
+# mutations don't make sense; https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1621879481099500
+USA/TX-HMH-MCoV-40892/2020
+USA/TX-HMH-MCoV-40893/2020
+USA/TX-HMH-MCoV-40917/2020
+USA/TX-HMH-MCoV-40977/2020
+USA/TX-HMH-MCoV-41485/2020
+USA/TX-HMH-MCoV-44272/2020
+
+# divergence, see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1621927155107400 and https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1621927177108000
+USA/TX-HMH-MCoV-40956/2020
+USA/WA-UW-4130/2020
+
+# Date
+USA/IL-RIPHL_30044_G/2021
+
+# divergence; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1621963221128700
+USA/WA-UW-24920/2020
+USA/MDH-7761/2020
+Australia/VIC16738/2020
+SouthKorea/KDCA3594/2020
+
+# Sample date before clade; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1622040744137600
+NorthAmerica/USA/IL-RED-FUL-39828238/2020
+Switzerland/SO-UHB-42850063/2021
+USA/KS-KHEL-1913/2020
+
+# Suspiciously early for clade
+England/LCST-24DE3CC/2020
+
+# Sample date before clade (see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1622107826150400):
+Italy/CAM-TIGEM-IZSM-COLLI-14397/2021
+Qatar/QA.QU_18.10.B12/2020
+Qatar/QA.QU_18.10.E12/2020
+USA/UT-UPHL-2104759182/2020
+SouthAfrica/NICD-N3820/2021
+Spain/MD-HRYC-71299296/2020
+
+# https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1622214173170700
+Mongolia/3622/2020
+
+# Sample date before clade
+SouthKorea/KDCA4115/2020
+USA/LA-EVTL2775/2021
+USA/LA-EVTL2776/2021
+
+# Divergence
+Iran/T11514/2021
+USA/LA-EVTL2492/2021
+Brazil/PB-BA1200-250009713/2020
+Brazil/RJ-FIOCRUZ-2188-1P/2020
+Spain/MD-IBV-99018541/2020
+Italy/CAM-TIGEM-IZSM-COLLI-14404/2021
+Italy/CAM-TIGEM-IZSM-COLLI-14404/2021
+USA/WA-UW-2105/2020
+India/MH-ICMR-NIV-INSAGOG-GSEQ-2375/2020
+India/TG-CDFD-N5400/2020
+
+# Date
+Switzerland/VD-CHUV-GEN2474/2020
+
+# Misdated; https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1622739851264500
+USA/MI-MDHHS-SC28884/2021
+USA/MI-MDHHS-SC28909/2021
+
+# divergence; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1622670440258000
+Colombia/COR-U24/2020
+Iran/Esf-11-169/2021
+Panama/GMI-PABT2504/2020
+Spain/AN-ISCIII-201636/2020
+USA/TX-HMH-MCoV-41494/2020
+USA/WA-UW-1972/2020
+
+# misdated; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1622745640267300
+USA/TX-HMH-MCoV-40911/2020
+USA/TX-HMH-MCoV-40926/2020
+
+# Divergence; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1622798726274300
+Belgium/MBLGc7385/2020
+
+# Divergence; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1622804065277800 and following threads
+Iran/T11877/2021
+India/UP-CCMB-CIA1758/2021
+Egypt/NRC-5918/2020
+Iran/T11529/2021
+Mongolia/3624/2020
+CzechRepublic/VIR-196/2021
+
+# s1 mutations - possible bioinformatic issue; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1622838574295600
+India/GA-NCCS-169260/2021
+India/GA-NCCS-NS2561/2021
+India/GA-NCCS-NS2566/2021
+India/MH-NCCS-2748700441970/2021
+India/MH-NCCS-2749001147276/2021
+India/MH-NCCS-2749001185481/2021
+India/MH-NCCS-AFMC-45271/2021
+
+#divergence; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1622838574295600
+Brazil/SP-L112-CD4087/2020
+USA/TX-HMH-MCoV-41509/2020
+
+# date
+Norway/7651/2020
+
+# Divergence (see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1623136183316600 and following threads)
+Paraguay/PY45/2021
+Mongolia/3001/2020
+Ireland/LH-NVRL-g20IRL08001/2020
+Latvia/229/2021
+NorthMacedonia/29934/2021
+SriLanka/CDR107/2021
+Indonesia/SS-NIHRD-WGS002222/2021
+Egypt/NRC-6781/2020
+Italy/CAM-TIGEM-IZSM-COLLI-14403/2021
+USA/CA-CSMC110/2020
+Turkey/HSGM-10611/2021
+India/UP-CCMB-CIA1728/2021
+Egypt/NRC-6781/2020
+Egypt/NRC-6792/2020
+Brazil/RS-LMM48674/2021
+
+# deletion in ORF1a
+India/MH-NCCS-2748000335553/2021
+
+# Divergence (see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1623221408342400 and following threads)
+Botswana/CV1507452/2021
+Netherlands/NB-EMC-813/2020
+Iran/Hormozgan/2021
+USA/WA-UW-12659/2020
+Panama/GMI-PA352445/2020
+USA/TX-HMH-MCoV-34797/2020
+Slovakia/UVZ_PL11_G3_8404/2021
+USA/WA-UW306/2020
+USA/WA-UW-9190/2020
+
+
+# Recombinant (see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1623222061345400)
+USA/MN-CDC-LC0060370/2021
+
+# Divergence (see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1623306212359300 and following threads)
+Mongolia/29432/2020
+Mongolia/7908/2020
+Mongolia/Imp3989/2020
+Kazakhstan/KUS-NRL-602S/2021
+India/ILSGS00941/2020
+USA/WA-UW-12935/2020
+USA/TX-HMH-MCoV-40904/2020
+Peru/LIM-INS-768/2020
+Mongolia/7908/2020
+India/MH-NIV-8404/2020
+Panama/GMI-PACNB11556/2020
+
+# Sampling date and clock deviation, see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1623307741362800
+India/MP-NCDC-2509230/2020
+
+# duplicates; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1623704938385700
+# additional_host_info: Traveller from São Paulo - Same patient from São Paulo, Brazil - hCoV-19/Brazil/SP-2898/2021 - EPI_ISL_2274979
+Brazil/RJ-FIOCRUZ-25683/2021
+# EPI_ISL_2466267 additional_host_info: virus isolated from hCoV-19/Brazil/AM-FIOCRUZ-20141493LR/2020 - EPI_ISL_1068092
+Brazil/AM-FIOCRUZ-34074-1P/2020
+# EPI_ISL_2466266 additional_host_info: virus isolated from hCoV-19/Brazil/AM-FIOCRUZ-20140452MJ-R1/2020 - EPI_ISL_1034305
+Brazil/AM-FIOCRUZ-34075-R1-1P/2020
+# EPI_ISL_2466265 additional_host_info: virus isolated from hCoV-19/Brazil/AM-FIOCRUZ-20897269OP/2020 - EPI_ISL_1068256
+Brazil/AM-FIOCRUZ-34077-1P/2020
+
+# sample date before clade; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1623710029387300
+Canada/BC-BCCDC-14365/2020
+Canada/BC-BCCDC-14366/2020
+Canada/BC-BCCDC-14367/2020
+Canada/BC-BCCDC-14368/2020
+Canada/BC-BCCDC-14369/2020
+Canada/BC-BCCDC-14457/2020
+Canada/BC-BCCDC-14458/2020
+Canada/BC-BCCDC-14459/2020
+Canada/BC-BCCDC-14460/2020
+Canada/BC-BCCDC-14461/2020
+Canada/BC-BCCDC-14462/2020
+Canada/BC-BCCDC-14463/2020
+Canada/BC-BCCDC-15192/2020
+Canada/BC-BCCDC-15474/2020
+Canada/BC-BCCDC-15475/2020
+Canada/BC-BCCDC-9651/2020
+Canada/BC-BCCDC-9652/2020
+Canada/BC-BCCDC-9653/2020
+Canada/BC-BCCDC-9659/2020
+France/IDF-HB_112010000864/2020
+France/IDF-HB_112010003918/2020
+France/IDF-HB_112010005538/2020
+France/IDF-HB_112010014593/2020
+France/IDF-HB_112010016977/2020
+Zimbabwe/CERI-KRISP-K011643/2020
+Zimbabwe/CERI-KRISP-K011662/2020
+
+# sample date before clade; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1623865783396900
+USA/SC-DHEC-1826/2020
+
+# s1 muts; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1623806802393700
+India/MH-NCCS-AFMC-48121/2021
+
+# misdated; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1623957828406800
+Canada/BC-BCCDC-10959/2020
+Canada/BC-BCCDC-11421/2020
+Canada/BC-BCCDC-11422/2020
+Canada/BC-BCCDC-11602/2020
+Canada/BC-BCCDC-12035/2020
+Canada/BC-BCCDC-12786/2020
+Canada/BC-BCCDC-12881/2020
+Canada/BC-BCCDC-13443/2020
+Canada/BC-BCCDC-13444/2020
+Canada/BC-BCCDC-13632/2020
+Canada/BC-BCCDC-14740/2020
+Canada/BC-BCCDC-9093/2020
+
+# divergence; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1624039632415600?thread_ts=1623985379.410600&cid=CTZKJC7PZ
+USA/TX-HMH-MCoV-40953/2020
+
+# divergence; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1624292300423100?thread_ts=1624066497.419400&cid=CTZKJC7PZ
+Panama/GMI-PACNB11547/2020
+
+# sample date before clade; see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1624294011425500
+Brazil/GO-2732R1/2021
+USA/IN-ISDHQ396/2020
+USA/IN-ISDHQ397/2020
+USA/IN-ISDHQ400/2020
+USA/IN-ISDHQ401/2020
+USA/IN-ISDHQ403/2020
+USA/IN-ISDHQ404/2020
+USA/IN-ISDHQ405/2020
+USA/IN-ISDHQ407/2020
+USA/IN-ISDHQ409/2020
+
+# Divergence, see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1624363917438400 and following threads
+CzechRepublic/188478-21cs/2021
+Angola/CERI-KRISP-K013679/2020
+Angola/CERI-KRISP-K013671/2020
+Italy/CAM-TIGEM-1667/2020
+env/Austria/CeMM2655/2021
+Turkey/HSGM-7131/2021
+Kazakhstan/ATY-NRL-499S/2021
+Angola/CERI-KRISP-K012644/2021
+Kazakhstan/KAR-NRL-9038S/2021
+Egypt/CCHE57357_Wave_3_A_005/2021
+
+# Divergence, see https://bedfordlab.slack.com/archives/CTZKJC7PZ/p1624438598456300 and following threads
+Brazil/RS-LMM52659/2021
+Botswana/R17B49_BHP_000467827/2021
+USA/MS-CDC-LC0068937/2021
+Egypt/NRC-5980/2020
+Bangladesh/BCSIR-NILMRC-769/2021
+India/CT-ILSGS00433/2021
+Brazil/RJ-FUNED-330107714/2020
+Taiwan/TSGH-30/2020
+Egypt/NRC-6102/2020
+USA/TX-HMH-MCoV-27396/2021
+Armenia/IMB3-6/2021
+Brazil/PR-FIOCRUZ-5241/2021
+Egypt/NRC-5863/2020
+
