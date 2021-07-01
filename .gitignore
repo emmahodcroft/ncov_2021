@@ -2,6 +2,7 @@
 # (or at least out of _this_ git repo).
 benchmarks/
 logs/
+log/
 results/
 build/
 auspice/
@@ -9,6 +10,10 @@ data/*
 defaults/colors.tsv
 defaults/colors_*.tsv
 stats.json
+
+# backups
+backup_data/
+backup_results/
 
 # Sensitive environment variables
 environment*
