@@ -5,7 +5,7 @@ S3_DST_BUCKET: "nextstrain-ncov-private"
 S3_DST_COMPRESSION: "xz"
 S3_DST_ORIGINS: ["gisaid"]
 
-genes: ["ORF1a", "ORF1b", "S", "ORF3a", "M", "N"]
+genes: ["ORF1a", "ORF1b", "S", "M", "N"] # "ORF3a" removed because of 21H - has frameshift
 use_nextalign: true
 
 # NOTE for shepherds -- there are commented out inputs here, you can
@@ -160,4 +160,4 @@ refine:
   coalescent: "opt"
   date_inference: "marginal"
   divergence_unit: "mutations"
-  clock_filter_iqd: 0
+  clock_filter_iqd: 4

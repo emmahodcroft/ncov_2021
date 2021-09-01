@@ -5,6 +5,7 @@ ruleorder: finalize_swiss > finalize
 ruleorder: filter_cluster > subsample
 ruleorder: download_masked > filter
 ruleorder: rename_subclades_birds > rename_subclades
+ruleorder: copy_from_scicore > download_for_cluster
 #ruleorder: download_masked > mask
 #ruleorder: download_masked > diagnostic
 
@@ -92,22 +93,40 @@ rule filter_cluster:
             --output {output.sequences} 2>&1 | tee {log}
         """
 
+rule copy_from_scicore:
+    message: "copying files from Cornelius' runs"
+    output:
+        sequences = "results/precomputed-filtered_gisaid.fasta",
+        metadata = "data/downloaded_gisaid.tsv",
+        mutations = "results/mutation_summary_gisaid.tsv"
+    conda: config["conda_environment"]
+    shell:
+        """
+        cp ../../roemer0001/ncov-simple/pre-processed/gisaid/mutation_summary.tsv {output.mutations:q}
+        cp ../../roemer0001/ncov-simple/data/gisaid/metadata.tsv {output.metadata:q}
+        xz -cdq ../../roemer0001/ncov-simple/pre-processed/gisaid/filtered.fasta.xz > {output.sequences:q}
+        """
+        #xz -kz {output.mutations:q}
+        #xz -kz {output.metadata:q}
+
 rule download_for_cluster:
     message: "Downloading metadata and fasta files from S3"
     output:
         sequences = "results/precomputed-filtered_gisaid.fasta",
-        diagnostics = "results/sequence-diagnostics_gisaid.tsv",
-        flagged = "results/flagged-sequences_gisaid.tsv",
+        metadata = "data/downloaded_gisaid.tsv",
         mutations = "results/mutation_summary_gisaid.tsv"
         #to_exclude = "results/to-exclude.txt"
+        #diagnostics = "results/sequence-diagnostics_gisaid.tsv",
+        #flagged = "results/flagged-sequences_gisaid.tsv",
     conda: config["conda_environment"]
     shell:
         """
-        aws s3 cp s3://nextstrain-ncov-private/sequence-diagnostics_gisaid.tsv.xz - | xz -cdq > {output.diagnostics:q}
-        aws s3 cp s3://nextstrain-ncov-private/flagged-sequences_gisaid.tsv.xz - | xz -cdq > {output.flagged:q}
-        aws s3 cp s3://nextstrain-ncov-private/mutation_summary_gisaid.tsv.xz - | xz -cdq > {output.mutations:q}
-        aws s3 cp s3://nextstrain-ncov-private/filtered_gisaid.fasta.xz - | xz -cdq > {output.sequences:q}
+        aws s3 cp s3://nextstrain-ncov-private/mutation-summary.tsv.xz - | xz -cdq > {output.mutations:q}
+        aws s3 cp s3://nextstrain-ncov-private/metadata.tsv.gz - | gunzip -cq > {output.metadata:q}
+        aws s3 cp s3://nextstrain-ncov-private/filtered.fasta.xz - | xz -cdq > {output.sequences:q}
         """
+        #aws s3 cp s3://nextstrain-ncov-private/flagged-sequences_gisaid.tsv.xz - | xz -cdq > {output.flagged:q}
+        #aws s3 cp s3://nextstrain-ncov-private/sequence-diagnostics_gisaid.tsv.xz - | xz -cdq > {output.diagnostics:q}
         #aws s3 cp s3://nextstrain-ncov-private/to-exclude.txt.xz - | xz -cdq > {output.to_exclude:q}
         #aws s3 cp s3://nextstrain-ncov-private/masked.fasta.xz - | xz -cdq > "results/masked.fasta"
         #aws s3 cp s3://nextstrain-ncov-private/masked.fasta.xz - | xz -cdq > {output.sequences:q}
