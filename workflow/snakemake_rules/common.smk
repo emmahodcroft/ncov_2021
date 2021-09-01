@@ -25,12 +25,6 @@ def numeric_date(dt=None):
 
     return res
 
-def _trim_origin(origin):
-    """the origin wildcard includes a leading `_`. This function returns the value without this `_`"""
-    if origin=="":
-        return ""
-    return origin[1:]
-
 def _get_subsampling_scheme_by_build_name(build_name):
     return config["builds"][build_name].get("subsampling_scheme", build_name)
 
@@ -38,72 +32,42 @@ def _get_filter_value(wildcards, key):
     default = config["filter"].get(key, "")
     if wildcards["origin"] == "":
         return default
-    return config["filter"].get(_trim_origin(wildcards["origin"]), {}).get(key, default)
+    return config["filter"].get(wildcards["origin"], {}).get(key, default)
 
 def _get_path_for_input(stage, origin_wildcard):
     """
     A function called to define an input for a Snakemake rule
-    This function always returns a local filepath, the format of which decides whether rules should
-    create this by downloading from a remote resource, or create it by a local compute rule.
+    This function always returns a local filepath, the format of which lets snakemake decide
+    whether to create it (via another rule) or use is as-is.
     """
-    if not origin_wildcard:
-        # No origin wildcards => deprecated single inputs (e.g. `config["sequences"]`) which cannot
-        # be downloaded from remote resources
-        if config.get("inputs"):
-            raise Exception("ERROR: empty origin wildcard but config defines 'inputs`")
-        path_or_url = config[stage] if stage in ["metadata", "sequences"] else ""
-        remote = False
+    input_file = config.get("inputs", {}).get(origin_wildcard, {}).get(stage, "")
+
+    if input_file:
+        return path_or_url(input_file, keep_local=True)
+
+    if stage in {"metadata", "sequences"}:
+        raise Exception(f"ERROR: config->input->{origin_wildcard}->{stage} is not defined.")
+    elif stage in {"aligned", "masked", "filtered"}:
+        return f"results/{stage}_{origin_wildcard}.fasta.xz"
     else:
-        trimmed_origin = _trim_origin(origin_wildcard)
-        path_or_url = config.get("inputs", {}).get(trimmed_origin, {}).get(stage, "")
-        scheme = urlsplit(path_or_url).scheme
-        remote = bool(scheme)
-
-        # Following checking should be the remit of the rule which downloads the remote resource
-        if scheme and scheme!="s3":
-            raise Exception(f"Input defined scheme {scheme} which is not yet supported.")
-
-        ## Basic checking which could be taken care of by the config schema
-        ## If asking for metadata/sequences, the config _must_ supply a `path_or_url`
-        if path_or_url=="" and stage in ["metadata", "sequences"]:
-            raise Exception(f"ERROR: config->input->{trimmed_origin}->{stage} is not defined.")
-
-    if stage=="metadata":
-        return f"data/downloaded{origin_wildcard}.tsv" if remote else path_or_url
-    if stage=="sequences":
-        return f"data/downloaded{origin_wildcard}.fasta" if remote else path_or_url
-    if stage=="aligned":
-        return f"results/precomputed-aligned{origin_wildcard}.fasta" if remote else f"results/aligned{origin_wildcard}.fasta"
-    if stage=="to-exclude":
-        return f"results/precomputed-to-exclude{origin_wildcard}.txt" if remote else f"results/to-exclude{origin_wildcard}.txt"
-    if stage=="masked":
-        return f"results/precomputed-masked{origin_wildcard}.fasta" if remote else f"results/masked{origin_wildcard}.fasta"
-    if stage=="filtered":
-        return f"results/precomputed-filtered{origin_wildcard}.fasta" if remote else f"results/filtered{origin_wildcard}.fasta"
-
-    raise Exception(f"_get_path_for_input with unknown stage \"{stage}\"")
+        raise Exception(f"_get_path_for_input with unknown stage \"{stage}\"")
 
 
 def _get_unified_metadata(wildcards):
     """
     Returns a single metadata file representing the input metadata file(s).
-    If there was only one supplied metadata file (e.g. the deprecated
-    `config["metadata"]` syntax, or one entry in the `config["inputs"] dict`)
+    If there was only one supplied metadata file in the `config["inputs"] dict`,
     then that file is returned. Else "results/combined_metadata.tsv" is returned
     which will run the `combine_input_metadata` rule to make it.
     """
-    if not config.get("inputs"):
-        return config["metadata"]
     if len(list(config["inputs"].keys()))==1:
-        return _get_path_for_input("metadata", "_"+list(config["inputs"].keys())[0])
-    return "results/combined_metadata.tsv"
+        return "results/sanitized_metadata_{origin}.tsv.xz".format(origin=list(config["inputs"].keys())[0])
+    return "results/combined_metadata.tsv.xz"
 
 def _get_unified_alignment(wildcards):
-    if not config.get("inputs"):
-        return "results/filtered.fasta"
     if len(list(config["inputs"].keys()))==1:
-        return _get_path_for_input("filtered", "_"+list(config["inputs"].keys())[0])
-    return "results/combined_sequences_for_subsampling.fasta",
+        return _get_path_for_input("filtered", list(config["inputs"].keys())[0])
+    return "results/combined_sequences_for_subsampling.fasta.xz",
 
 def _get_metadata_by_build_name(build_name):
     """Returns a path associated with the metadata for the given build name.
@@ -147,21 +111,62 @@ def _get_sampling_bias_correction_for_wildcards(wildcards):
     else:
         return config["traits"]["default"]["sampling_bias_correction"]
 
+def _get_min_date_for_frequencies(wildcards):
+    if "frequencies" in config and "min_date" in config["frequencies"]:
+        return config["frequencies"]["min_date"]
+    else:
+        # If not explicitly specified, default to 1 year back from the present
+        min_date_cutoff = datetime.date.today() - datetime.timedelta(weeks=52)
+        return numeric_date(
+            min_date_cutoff
+        )
+
 def _get_max_date_for_frequencies(wildcards):
     if "frequencies" in config and "max_date" in config["frequencies"]:
         return config["frequencies"]["max_date"]
     else:
-        return numeric_date(date.today())
+        # Allow users to censor the N most recent days to minimize effects of
+        # uneven recent sampling.
+        recent_days_to_censor = config.get("frequencies", {}).get("recent_days_to_censor", 0)
+        offset = datetime.timedelta(days=recent_days_to_censor)
 
-def _get_first(config, *keys):
-    """
-    Get the value of the first key in *keys* that exists in *config* and has a
-    non-empty value.
+        return numeric_date(
+            date.today() - offset
+        )
 
-    Raises a :class:`KeyError` if none of the *keys* exist with a suitable
-    value.
-    """
-    for key in keys:
-        if config.get(key) not in {"", None}:
-            return config[key]
-    raise KeyError(str(keys))
+def _get_upload_inputs(wildcards):
+    # The main workflow supports multiple inputs/origins, but our desired file
+    # structure under data.nextstrain.org/files/ncov/open/… is designed around
+    # a single input/origin.  Intermediates (aligned, masked, filtered, etc)
+    # are specific to each input/origin and thus do not match our desired
+    # structure, while builds (global, europe, africa, etc) span all
+    # inputs/origins (and thus do).  In our desired outcome, the two kinds of
+    # files are comingled.  Without changing the main workflow, the mismatch
+    # has to be reconciled by the upload rule.  Thus, the upload rule enforces
+    # and uses only single-origin configurations.  How third-wave.
+    #   -trs, 7 May 2021
+    if len(config["S3_DST_ORIGINS"]) != 1:
+        raise Exception(f'The "upload" rule requires a single value in S3_DST_ORIGINS (got {config["S3_DST_ORIGINS"]!r}).')
+
+    origin = config["S3_DST_ORIGINS"][0]
+
+    # mapping of remote → local filenames
+    uploads = {
+        f"aligned.fasta.xz":              f"results/aligned_{origin}.fasta.xz",              # from `rule align`
+        f"masked.fasta.xz":               f"results/masked_{origin}.fasta.xz",               # from `rule mask`
+        f"filtered.fasta.xz":             f"results/filtered_{origin}.fasta.xz",             # from `rule filter`
+        f"mutation-summary.tsv.xz":       f"results/mutation_summary_{origin}.tsv.xz",       # from `rule mutation_summary`
+    }
+
+    for build_name in config["builds"]:
+        uploads.update({
+            f"{build_name}/sequences.fasta.xz": f"results/{build_name}/{build_name}_subsampled_sequences.fasta.xz",   # from `rule combine_samples`
+            f"{build_name}/metadata.tsv.xz":    f"results/{build_name}/{build_name}_subsampled_metadata.tsv.xz",      # from `rule combine_samples`
+            f"{build_name}/aligned.fasta.xz":   f"results/{build_name}/aligned.fasta.xz",                             # from `rule build_align`
+            # export the auspice dataset which matches the subsampled sequences / metadata (see `rule finalize`)
+            f"{build_name}/{build_name}.json":                  f"auspice/{config['auspice_json_prefix']}_{build_name}.json",
+            f"{build_name}/{build_name}_tip-frequencies.json":  f"auspice/{config['auspice_json_prefix']}_{build_name}_tip-frequencies.json",
+            f"{build_name}/{build_name}_root-sequence.json":    f"auspice/{config['auspice_json_prefix']}_{build_name}_root-sequence.json"
+        })
+
+    return uploads

@@ -46,6 +46,7 @@ Utah	UT
 Vermont	VT
 Virginia	VA
 Washington	WA
+Washington DC	DC
 West Virginia	WV
 Wisconsin	WI
 Wyoming	WY
@@ -120,3 +121,54 @@ Warminsko-Mazurskie	(Warminsko-Mazurskie)
 Pomorskie	(Pomorskie)
 Podlaskie	(Podlaskie)
 Maranhão	BR
+South Holland	NL
+Lubuskie	(Lubuskie)
+Espirito Santo	(Espirito Santo)
+Sergipe	(Sergipe)
+Navarra	ES
+Norte de Santander	CO
+O'Higgins	CL
+Malopolskie	(Malopolskie)
+Molise	(Molise)
+Sankt Gallen	CH
+Łódzkie	(Łódzkie)
+Slaskie	(Slaskie)
+Swietokrzyskie	(Swietokrzyskie)
+Zachodniopomorskie	(Zachodniopomorskie)
+Lisbon	PT
+Santa Catarina	BR
+North Brabant	NL
+Catalunya	ES
+Baja California	MX
+Entre Rios	AR
+Dolnośląskie	(Dolnośląskie)
+Rio Grande do Norte	BR
+Central	PY
+Amapa	BR
+Boyaca	CO
+Halle-Vilvoorde	BE
+Antioquia	CO
+Mazowieckie	(Mazowieckie)
+Galapagos	EC
+Maule	CL
+Mons	BE
+Guayas	EC
+Bocas del Toro	PA
+Aragon	ES
+Gujarat	IN
+Luapula	ZM
+Pernambuco	BR
+Opolskie	(Opolskie)
+Quiche	GT
+Zacapa	GT
+Castilla y Leon	ES
+Guatemala	GT
+Ile de France	FR
+Coquimbo	CL
+San Marcos	GT
+Trnava	SK
+South Moravian Region	CZ
+Mato Grosso	BR
+Magdalena	CO
+Chaco	AR
+Paraná	BR

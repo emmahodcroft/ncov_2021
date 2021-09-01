@@ -1,4 +1,5 @@
 ### Wallonia
+### Vlaanderen
 
 ### Antwerpen
 
@@ -30,8 +31,8 @@ Brecht
 	Sint-Lenaarts
 Edegem
 	Edegem
-Essen
-	Essen
+Essen BE
+	Essen BE
 Hemiksem
 	Hemiksem
 Hove
@@ -233,6 +234,7 @@ Westerlo
 ### Brabant Wallon
 
 # Nivelles
+Argenteuil BE
 Beauvechain
 	Beauvechain
 	Hamme-Mille
@@ -634,10 +636,10 @@ Jurbise
 	Jurbise
 	Masnuy-Saint-Jean
 	Masnuy-Saint-Pierre
-Lens
+Lens BE
 	Bauffe
 	Cambron-Saint-Vincent
-	Lens
+	Lens BE
 	Lombise
 	Montignies-lez-Lens
 Mons
@@ -655,7 +657,7 @@ Mons
 	Mons
 	Nimy
 	Nouvelles
-	Saint-Denis
+	Saint-Denis (Mons)
 	Obourg
 	Saint-Symphorien
 	Spiennes
@@ -730,9 +732,9 @@ Soignies
 # Thuin
 Anderlues
 	Anderlues
-Beaumont
+Beaumont BE
 	Barbençon
-	Beaumont
+	Beaumont BE
 	Leugnies
 	Leval-Chaudeville
 	Renlies
@@ -1886,6 +1888,7 @@ Habay
 	Habay-la-Vieille
 	Hachy
 	Houdemont
+	Marbehan
 	Rulles
 Meix-devant-Virton
 	Gérouville
@@ -2041,7 +2044,7 @@ Onhaye
 	Serville
 	Sommière
 	Weillen
-Rochefort
+Rochefort BE
 	Ave-et-Auffe
 	Buissonville
 	Éprave
@@ -2050,7 +2053,7 @@ Rochefort
 	Lavaux-Sainte-Anne
 	Lessive
 	Mont-Gauthier
-	Rochefort
+	Rochefort BE
 	Villers-sur-Lesse
 	Wavreille
 Somme-Leuze
@@ -2180,7 +2183,7 @@ La Bruyère
 	Émines
 	Meux
 	Rhisnes
-	Saint-Denis
+	Saint-Denis (La Bruyère)
 	Villers-lez-Heest
 	Warisoulx
 Mettet
@@ -2483,7 +2486,7 @@ Kaprijke
 Maldegem
 	Adegem
 	Maldegem
-	Middelburg
+	Middelburg BE
 Sint-Laureins
 	Sint-Jan-in-Eremo
 	Sint-Laureins
@@ -2548,6 +2551,7 @@ Gent
 	Sint-Denijs-Westrem - Afsnee
 	Wondelgem
 	Zwijnaarde
+	Desteldonk
 Lievegem
 	Lovendegem
 	Oostwinkel
@@ -2721,7 +2725,7 @@ Beersel
 	Beersel
 	Dworp
 	Huizingen
-	Lot
+	Lot BE
 Bever
 	Bever
 Dilbeek
@@ -2755,7 +2759,7 @@ Halle
 Herne
 	Herfelingen
 	Herne
-	Sint-Pieters-Kapelle
+	Sint-Pieters-Kapelle (Herne)
 Hoeilaart
 	Hoeilaart
 Kampenhout
@@ -2882,6 +2886,7 @@ Diest
 	Molenstede
 	Schaffen
 	Webbekom
+	Deurne (Leuven)
 Geetbets
 	Geetbets
 	Grazen
@@ -3015,7 +3020,7 @@ Zoutleeuw
 Beernem
 	Beernem
 	Oedelem
-	Sint-Joris
+	Sint-Joris (Brugge)
 Blankenberge
 	Blankenberge
 	Uitkerke
@@ -3045,7 +3050,7 @@ Jabbeke
 Knokke-Heist
 	Heist
 	Knokke
-	Ramskapelle
+	Ramskapelle (Knokke-Heist)
 	Westkapelle
 Oostkamp
 	Hertsberge
@@ -3229,7 +3234,7 @@ Middelkerke
 	Mannekensvere
 	Middelkerke
 	Schore
-	Sint-Pieters-Kapelle
+	Sint-Pieters-Kapelle (Middelkerke)
 	Slijpe
 	Westende
 	Wilskerke
@@ -3323,8 +3328,8 @@ Koksijde
 	Wulpen
 Nieuwpoort
 	Nieuwpoort
-	Ramskapelle
-	Sint-Joris
+	Ramskapelle (Nieuwpoort)
+	Sint-Joris (Veurne)
 Veurne
 	Avekapelle
 	Vinkem
@@ -3364,7 +3369,7 @@ Uccle
 Watermael-Boitsfort
 Woluwe-Saint-Lambert
 Woluwe-Saint-Pierre
-Haren
+Haren BE
 Laken
 Neder-Over-Heembeek
 Moriensart

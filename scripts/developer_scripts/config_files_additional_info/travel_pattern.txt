@@ -64,3 +64,50 @@ Baseline Surveillance, Traveller from XXX
 Baseline Surveillance, Traveller from XXX
 Baseline surveillance - traveller from XXX
 A quarantined traveller from XXX
+Returnee from XXX
+imported case fro XXX
+Imported case with travel history from XXX
+Imported case with travel history from XXX and Netherlands
+Imported case with travel history from XXX and Portugal
+Imported case with travel history from XXX and UK
+Imported case with travel history from XXX and UAE
+Case from XXX
+Reternee from XXX
+Patient infected after a stopover in XXX
+Patient infected while traveling from XXX
+Patient travelled from XXX
+Traveler returning from XXX
+Patient Came From XXX Recently
+After visiting XXX
+recent travel_XXX
+Airport Quarantine Station in Japan,Human, COVID-19 positive case who entered from XXX
+Patient Likely Infected During Travel To XXX
+Patient Likely infected during travel to XXX
+Travel history: XXX
+Travel related exposure - XXX
+Imported With Travel History From XXX
+Imported with travel history from XXX
+A quarantined Traveller from XXX
+Traveler-XXX
+Travel History - XXX
+Port of embarkation XXX
+Imported case (Incoming passenger) - Port of embarkation XXX
+Other: Airport Quarantine Station in Japan. COVID-19 positive case who entered from XXX.
+Patient infected while traveling in XXX.
+XXX Returning Overseas Filipino
+With History of Travel: XXX Returning Overseas Filipino
+Travel history: XXX Returning Overseas Filipino
+Travel History: XXX Returning Overseas Filipino
+Private Hospital; Travel history: XXX
+Non-Omani / Imported-Travel from XXX
+Private Lab; Travel history: XXX
+Omani / Imported-Travel from XXX
+He traveled to XXX
+came back from XXX
+come back from XXX
+Crew member of ship coming from XXX
+Crew Member of ship coming from XXX
+Quarantine: Airport Quarantine Station in Japan; Travel history: XXX
+Airport Quarantine Station in Japan; Travel history: XXX
+imported from XXX
+travel history to XXX
