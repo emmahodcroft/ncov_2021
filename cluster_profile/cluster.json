@@ -31,6 +31,10 @@
         "n" : 1,
         "mem": "32G"
     },
+    "export": {
+        "n" : 1,
+        "mem": "32G"
+    },
     "proximity_score":{
         "time" : "05:59:00",
         "qos": "6hours",

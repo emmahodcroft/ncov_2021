@@ -1,13 +1,20 @@
-localrules: colors, upload, download_masked, download, download_for_cluster, download_filtered
+localrules: colors, download_for_cluster, extract_cluster
 
 
 ruleorder: finalize_swiss > finalize
 ruleorder: filter_cluster > subsample
-ruleorder: download_masked > filter
+ruleorder: copy_from_scicore > filter
 ruleorder: rename_subclades_birds > rename_subclades
 ruleorder: copy_from_scicore > download_for_cluster
 #ruleorder: download_masked > mask
 #ruleorder: download_masked > diagnostic
+
+def _get_path_for_cluster_input(cluster_wildcard):
+    input_file = "{}/clusters/cluster_{}.txt".format(config.get("profile-name", ""), cluster_wildcard)
+
+    if input_file:
+        return path_or_url(input_file, keep_local=True)
+
 
 rule add_labels:
     message: "Remove extraneous colorings for main build and move frequencies"
@@ -55,30 +62,55 @@ rule finalize_swiss:
 
 rule extract_cluster:
     input:
-        cluster = "cluster_profile/clusters/cluster_{build_name}.txt",
+        cluster = lambda wildcards: _get_path_for_cluster_input(wildcards.build_name), #"cluster_profile/clusters/cluster_{build_name}.txt",
         alignment = _get_unified_alignment
     output:
         cluster_sample = "results/{build_name}/sample-precluster.fasta"
     run:
         from Bio import SeqIO
+        import lzma
 
         with open(input.cluster) as fh:
             cluster = set([x.strip() for x in fh.readlines()])
 
         seq_out = open(output.cluster_sample, 'w')
-        for s in SeqIO.parse(input.alignment, 'fasta'):
-            if s.id in cluster:
-                SeqIO.write(s, seq_out, 'fasta')
+        with lzma.open(input.alignment, mode="rt") as fh:
+            for s in SeqIO.parse(fh, 'fasta'):
+                if s.id in cluster:
+                    SeqIO.write(s, seq_out, 'fasta')
 
         seq_out.close()
+
+rule extract_cluster_2:
+    input:
+        cluster = lambda wildcards: _get_path_for_cluster_input(wildcards.build_name), #"cluster_profile/clusters/cluster_{build_name}.txt",
+        metadata = _get_unified_metadata,
+        alignment = _get_unified_alignment,
+        index = rules.index_sequences.output.sequence_index
+    output:
+        cluster_sample = "results/{build_name}/sample-precluster22.fasta"
+    log:
+        "logs/subsample_{build_name}_cluster-extract.txt"
+    conda: config["conda_environment"]
+    shell:
+        """
+        augur filter \
+            --sequences {input.alignment} \
+            --sequence-index {input.index} \
+            --metadata {input.metadata} \
+            --include {input.cluster} \
+            --output {output.cluster_sample} 2>&1 | tee {log}
+        """
 
 rule filter_cluster:
     input:
         sequences = rules.extract_cluster.output.cluster_sample,
         metadata = _get_unified_metadata,
-        include = config["files"]["include"]
+        include = config["files"]["include"],
+        cluster = lambda wildcards: _get_path_for_cluster_input(wildcards.build_name) #"{}/clusters/cluster_{build_name}.txt".format(config.get("profile-name",{})
     output:
-        sequences = "results/{build_name}/sample-cluster.fasta"
+        sequences = "results/{build_name}/sample-cluster.fasta",
+        cluster = "results/{build_name}/sample-cluster.txt"
     log:
         "logs/subsample_{build_name}_cluster.txt"
     conda: config["conda_environment"]
@@ -90,24 +122,27 @@ rule filter_cluster:
             --include {input.include} \
             --group-by country year month \
             --subsample-max-sequences 5000 \
+            --output-strains {output.cluster} \
             --output {output.sequences} 2>&1 | tee {log}
         """
+        #cp {input.cluster:q} {output.cluster:q}
 
 rule copy_from_scicore:
     message: "copying files from Cornelius' runs"
     output:
-        sequences = "results/precomputed-filtered_gisaid.fasta",
-        metadata = "data/downloaded_gisaid.tsv",
+        sequences = "results/filtered_gisaid.fasta.xz",
+        metadata = "data/metadata.tsv",
         mutations = "results/mutation_summary_gisaid.tsv"
     conda: config["conda_environment"]
     shell:
         """
         cp ../../roemer0001/ncov-simple/pre-processed/gisaid/mutation_summary.tsv {output.mutations:q}
         cp ../../roemer0001/ncov-simple/data/gisaid/metadata.tsv {output.metadata:q}
-        xz -cdq ../../roemer0001/ncov-simple/pre-processed/gisaid/filtered.fasta.xz > {output.sequences:q}
+        cp ../../roemer0001/ncov-simple/pre-processed/gisaid/filtered.fasta.xz {output.sequences:q}
         """
         #xz -kz {output.mutations:q}
         #xz -kz {output.metadata:q}
+        #xz -cdq ../../roemer0001/ncov-simple/pre-processed/gisaid/filtered.fasta.xz > {output.sequences:q}
 
 rule download_for_cluster:
     message: "Downloading metadata and fasta files from S3"
@@ -146,3 +181,4 @@ rule rename_subclades_birds:
                     new_data[k] = {"Q677_membership": v["clade_membership"]}
         with open(output.clade_data, "w") as fh:
             json.dump({"nodes":new_data}, fh)
+
