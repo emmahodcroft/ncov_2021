@@ -98,7 +98,8 @@ if "profile-name" in config and os.path.isdir("{}/clusters/".format(config["prof
 
         # Need to exclude anything in exclude file + anything in the cluster from co ntext sample
         #HACK
-        os.system(f"cp cluster_profile/exclude.txt {profile_name}/exclude.txt")
+        if profile_name != "cluster_profile":
+            os.system(f"cp cluster_profile/exclude.txt {profile_name}/exclude.txt")
         os.system(f"cat defaults/exclude.txt {profile_name}/exclude.txt {profile_name}/clusters/cluster_{new_clus}.txt > {profile_name}/clusters/cluster_{new_clus}_exclude.txt")
         #original - get working!
         #os.system(f"cat defaults/exclude.txt {profile_name}/exclude.txt {profile_name}/clusters/cluster_{new_clus}.txt > {profile_name}/clusters/cluster_{new_clus}_exclude.txt")
