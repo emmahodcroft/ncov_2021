@@ -15,7 +15,7 @@ if __name__ == '__main__':
     parser.add_argument("--sequence-index", type=str, required=True, help="sequence index file")
     parser.add_argument("--proximities", type = str, required=True, help="tsv file with proximities")
     parser.add_argument("--Nweight", type = float, default=0.003, required=False, help="parameterizes de-prioritization of incomplete sequences")
-    parser.add_argument("--crowding-penalty", type = float, default=0.01, required=False, help="parameterizes how priorities decrease when there is many very similar sequences")
+    parser.add_argument("--crowding-penalty", type = float, default=0.1, required=False, help="parameterizes how priorities decrease when there is many very similar sequences")
     parser.add_argument("--output", type=str, required=True, help="tsv file with the priorities")
     args = parser.parse_args()
 
@@ -31,7 +31,7 @@ if __name__ == '__main__':
         tmp["priority"] = -tmp.distance - tmp.N*args.Nweight
         name_prior = [(name, d.priority) for name, d in tmp.iterrows()]
         shuffle(name_prior)
-        candidates[focal_seq] = sorted(name_prior, key=lambda x:x[1])
+        candidates[focal_seq] = sorted(name_prior, key=lambda x:-x[1])
 
     # export priorities
     crowding = args.crowding_penalty
