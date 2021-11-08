@@ -3,9 +3,9 @@ localrules: colors, download_for_cluster, extract_cluster
 
 ruleorder: finalize_swiss > finalize
 ruleorder: filter_cluster > subsample
-ruleorder: copy_from_scicore > filter
+ruleorder: copy_from_scicore_archive > filter
 ruleorder: rename_subclades_birds > rename_subclades
-ruleorder: copy_from_scicore > download_for_cluster
+ruleorder: copy_from_scicore_archive > download_for_cluster
 #ruleorder: download_masked > mask
 #ruleorder: download_masked > diagnostic
 
@@ -143,6 +143,23 @@ rule copy_from_scicore:
         #xz -kz {output.mutations:q}
         #xz -kz {output.metadata:q}
         #xz -cdq ../../roemer0001/ncov-simple/pre-processed/gisaid/filtered.fasta.xz > {output.sequences:q}
+
+rule copy_from_scicore_archive:
+    message: "copying files from Cornelius' runs - the archive"
+    output:
+        sequences = "results/filtered_gisaid.fasta.xz",
+        metadata = "data/metadata.tsv",
+        mutations = "results/mutation_summary_gisaid.tsv"
+    conda: config["conda_environment"]
+    shell:
+        """
+        cp ../../roemer0001/ncov-simple/archive/pre-processed/gisaid/mutation_summary.tsv {output.mutations:q}
+        cp ../../roemer0001/ncov-simple/archive/pre-processed/metadata.tsv {output.metadata:q}
+        cp ../../roemer0001/ncov-simple/archive/pre-processed/gisaid/filtered.fasta.xz {output.sequences:q}
+        """
+        #cp ../../roemer0001/ncov-simple/data/gisaid/metadata.tsv {output.metadata:q}
+        #xz -kz {output.mutations:q}
+        #xz -kz {output.metadata:q}
 
 rule download_for_cluster:
     message: "Downloading metadata and fasta files from S3"
