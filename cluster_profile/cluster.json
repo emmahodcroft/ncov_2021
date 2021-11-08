@@ -4,7 +4,7 @@
         "time" : "05:59:00",
         "qos": "6hours",
         "n" : 1,
-        "mem": "24G"
+        "mem": "32G"
     },
     "ancestral":
     {
