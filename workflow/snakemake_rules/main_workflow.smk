@@ -276,6 +276,15 @@ def get_priority_argument(wildcards):
     else:
         return ""
 
+def get_exclude_sites_for_treebuilding_setting(wildcards):
+    location_name = wildcards.build_name
+
+    if "tree_exclude_sites" in config["builds"][location_name]:
+        return config["builds"][location_name]["tree_exclude_sites"]
+    else:
+        return ""
+
+
 
 def _get_specific_subsampling_setting(setting, optional=False):
     # Note -- this function contains a lot of conditional logic because
@@ -669,7 +678,8 @@ rule tree:
     output:
         tree = "results/{build_name}/tree_raw.nwk"
     params:
-        args = lambda w: config["tree"].get("tree-builder-args","") if "tree" in config else ""
+        args = lambda w: config["tree"].get("tree-builder-args","") if "tree" in config else "",
+        exclude_sites = get_exclude_sites_for_treebuilding_setting
     log:
         "logs/tree_{build_name}.txt"
     benchmark:
@@ -686,6 +696,7 @@ rule tree:
         augur tree \
             --alignment {input.alignment} \
             --tree-builder-args {params.args} \
+            {params.exclude_sites} \
             --output {output.tree} \
             --nthreads {threads} 2>&1 | tee {log}
         """
@@ -963,6 +974,53 @@ rule clades:
             --output-node-data {output.clade_data} 2>&1 | tee {log}
         """
 
+rule subclades:
+    message: "Adding internal clade labels"
+    input:
+        tree = rules.refine.output.tree,
+        aa_muts = rules.translate.output.node_data,
+        nuc_muts = rules.ancestral.output.node_data,
+        subclades = config["files"]["subclades"],
+        clades = config["files"]["clades"]
+    output:
+        clade_data = "results/{build_name}/temp_subclades.json"
+    params:
+        clade_file = "results/{build_name}/temp_subclades.tsv"
+    log:
+        "logs/subclades_{build_name}.txt"
+    benchmark:
+        "benchmarks/subclades_{build_name}.txt"
+    resources:
+        # Memory use scales primarily with size of the node data.
+        mem_mb=lambda wildcards, input: 3 * int(input.size / 1024 / 1024)
+    conda: config["conda_environment"]
+    shell:
+        """
+        cat {input.clades} {input.subclades} > {params.clade_file} && \
+        augur clades --tree {input.tree} \
+            --mutations {input.nuc_muts} {input.aa_muts} \
+            --clades {params.clade_file} \
+            --output-node-data {output.clade_data} 2>&1 | tee {log}
+        """
+
+rule rename_subclades:
+    input:
+        node_data = rules.subclades.output.clade_data
+    output:
+        clade_data = "results/{build_name}/subclades.json"
+    benchmark:
+        "benchmarks/rename_subclades_{build_name}.txt"
+    run:
+        import json
+        with open(input.node_data, 'r', encoding='utf-8') as fh:
+            d = json.load(fh)
+            new_data = {}
+            for k,v in d['nodes'].items():
+                if "clade_membership" in v:
+                    new_data[k] = {"subclade_membership": v["clade_membership"]}
+        with open(output.clade_data, "w") as fh:
+            json.dump({"nodes":new_data}, fh)
+
 rule emerging_lineages:
     message: "Adding emerging clade labels"
     input:
@@ -1174,14 +1232,15 @@ def _get_node_data_by_wildcards(wildcards):
         rules.refine.output.node_data,
         rules.ancestral.output.node_data,
         rules.translate.output.node_data,
-        rules.rename_emerging_lineages.output.clade_data,
+        rules.rename_subclades.output.clade_data,
+        #rules.rename_emerging_lineages.output.clade_data,
         rules.clades.output.clade_data,
         rules.recency.output.node_data,
         rules.traits.output.node_data,
         rules.logistic_growth.output.node_data,
         rules.aa_muts_explicit.output.node_data,
         rules.distances.output.node_data,
-        rules.calculate_epiweeks.output.node_data
+        #rules.calculate_epiweeks.output.node_data
     ]
 
     if "run_pangolin" in config and config["run_pangolin"]:
@@ -1234,7 +1293,8 @@ rule add_branch_labels:
     message: "Adding custom branch labels to the Auspice JSON"
     input:
         auspice_json = rules.export.output.auspice_json,
-        emerging_clades = rules.emerging_lineages.output.clade_data
+        subclades = rules.rename_subclades.output.clade_data,
+        #emerging_clades = rules.emerging_lineages.output.clade_data
     output:
         auspice_json = "results/{build_name}/ncov_with_branch_labels.json"
     log:
@@ -1244,7 +1304,7 @@ rule add_branch_labels:
         """
         python3 ./scripts/add_branch_labels.py \
             --input {input.auspice_json} \
-            --emerging-clades {input.emerging_clades} \
+            --emerging-clades {input.subclades} \
             --output {output.auspice_json}
         """
 
