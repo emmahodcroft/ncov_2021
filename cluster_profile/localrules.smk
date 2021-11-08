@@ -6,6 +6,8 @@ ruleorder: filter_cluster > subsample
 ruleorder: download_masked > filter
 ruleorder: rename_subclades_birds > rename_subclades
 ruleorder: copy_from_scicore > download_for_cluster
+ruleorder: copy_from_scicore_archive > download_for_cluster
+ruleorder: copy_from_scicore > copy_from_scicore_archive
 #ruleorder: download_masked > mask
 #ruleorder: download_masked > diagnostic
 
@@ -103,9 +105,27 @@ rule copy_from_scicore:
     shell:
         """
         cp ../../roemer0001/ncov-simple/pre-processed/gisaid/mutation_summary.tsv {output.mutations:q}
-        cp ../../roemer0001/ncov-simple/data/gisaid/metadata.tsv {output.metadata:q}
+        cp ../../roemer0001/ncov-simple/pre-processed/metadata.tsv {output.metadata:q}
         xz -cdq ../../roemer0001/ncov-simple/pre-processed/gisaid/filtered.fasta.xz > {output.sequences:q}
         """
+        #cp ../../roemer0001/ncov-simple/data/gisaid/metadata.tsv {output.metadata:q}
+        #xz -kz {output.mutations:q}
+        #xz -kz {output.metadata:q}
+
+rule copy_from_scicore_archive:
+    message: "copying files from Cornelius' runs - the archive"
+    output:
+        sequences = "results/precomputed-filtered_gisaid.fasta",
+        metadata = "data/downloaded_gisaid.tsv",
+        mutations = "results/mutation_summary_gisaid.tsv"
+    conda: config["conda_environment"]
+    shell:
+        """
+        cp ../../roemer0001/ncov-simple/archive/pre-processed/gisaid/mutation_summary.tsv {output.mutations:q}
+        cp ../../roemer0001/ncov-simple/archive/pre-processed/metadata.tsv {output.metadata:q}
+        xz -cdq ../../roemer0001/ncov-simple/archive/pre-processed/gisaid/filtered.fasta.xz > {output.sequences:q}
+        """
+        #cp ../../roemer0001/ncov-simple/data/gisaid/metadata.tsv {output.metadata:q}
         #xz -kz {output.mutations:q}
         #xz -kz {output.metadata:q}
 
