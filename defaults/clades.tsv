@@ -56,6 +56,7 @@ clade	gene	site	alt
 20H (Beta, V2)	nuc	25563	T
 20H (Beta, V2)	nuc	23063	T
 20H (Beta, V2)	nuc	23012	A
+20H (Beta, V2)	nuc	26456	T
 
 20I (Alpha, V1)	nuc	8782	C
 20I (Alpha, V1)	nuc	14408	T
@@ -106,7 +107,7 @@ clade	gene	site	alt
 21G (Lambda)	nuc	22917	A
 21G (Lambda)	nuc	23031	C
 
-21H	nuc	11451	G
-21H	nuc	13057	T
-21H	nuc	17491	T
-21H	nuc	19035	C
+21H (Mu)	nuc	11451	G
+21H (Mu)	nuc	13057	T
+21H (Mu)	nuc	17491	T
+21H (Mu)	nuc	19035	C
