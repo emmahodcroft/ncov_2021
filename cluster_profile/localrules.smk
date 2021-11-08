@@ -5,7 +5,9 @@ ruleorder: finalize_swiss > finalize
 ruleorder: filter_cluster > subsample
 ruleorder: copy_from_scicore_archive > filter
 ruleorder: rename_subclades_birds > rename_subclades
+ruleorder: copy_from_scicore > download_for_cluster
 ruleorder: copy_from_scicore_archive > download_for_cluster
+ruleorder: copy_from_scicore_archive > copy_from_scicore
 #ruleorder: download_masked > mask
 #ruleorder: download_masked > diagnostic
 
