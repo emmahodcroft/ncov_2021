@@ -51,7 +51,7 @@ if __name__ == '__main__':
           if n["name"] in spike_mutations:
               n["branch_attrs"]["labels"]["spike_mutations"] = spike_mutations[n["name"]]
           if n["name"] in clade_labels:
-              n["branch_attrs"]["labels"]["emerging_lineage"] = clade_labels[n["name"]]
+              n["branch_attrs"]["labels"]["Q677_clades"] = clade_labels[n["name"]]
 
       if "children" in n:
           for c in n["children"]:
