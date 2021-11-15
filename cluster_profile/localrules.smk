@@ -1,4 +1,4 @@
-localrules: colors, download_for_cluster, extract_cluster
+localrules: colors, download_for_cluster
 
 
 ruleorder: finalize_swiss > finalize
