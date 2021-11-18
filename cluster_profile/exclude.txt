@@ -560,6 +560,7 @@ Netherlands/ZH-EMC-3837/2020
 Netherlands/ZH-EMC-3838/2020
 Netherlands/ZH-EMC-3839/2020
 England/NORT-YYNW7P/2020
+USA/TX-HMH-MCoV-34911/2020
 
 #A bunch of bad ones from the UK, delta but supposedly April 2020
 USA/CA-LACPHL-AF03229/2020
