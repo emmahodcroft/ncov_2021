@@ -66,3 +66,6 @@ scripts/developer_scripts/outputs_new_sequences/
 
 # SLURM log files
 slurm-*.out
+
+#scicore submission script
+start_cluster_run.sh
