@@ -1,6 +1,7 @@
 import copy
 from datetime import date
 import os
+from pathlib import Path
 import sys
 from os import environ
 from socket import getfqdn
@@ -10,7 +11,12 @@ from snakemake.utils import validate
 import glob
 import copy
 from collections import OrderedDict
+import textwrap
 import time
+
+# Set the maximum recursion limit globally for all shell commands, to avoid
+# issues with large trees crashing the workflow.
+shell.prefix("export AUGUR_RECURSION_LIMIT=10000; ")
 
 # Store the user's configuration prior to loading defaults, so we can check for
 # reused subsampling scheme names in the user's config. We need to make a deep
@@ -64,17 +70,25 @@ if len(overlapping_schemes) > 0:
     logger.warning("")
     time.sleep(5)
 
-# default build if none specified in config
+# Assign a default build if none are specified in the config. Users can define a
+# `default_build_name` in their builds config without assigning any other build
+# information. Otherwise, we use a generic name for the default build.
 if "builds" not in config:
     config["builds"] = {
-        "global": {
-            "subsampling_scheme": "region_global",
+        config.get("default_build_name", "default-build"): {
+            "subsampling_scheme": "all",
         }
     }
 
+if "profile-name" in config:
+    print("There is a profile name, it is:")
+    print(config["profile-name"])
+
 # if want to run builds for clusters
-if os.path.isdir("cluster_profile/clusters/") and "cluster" in config['builds'] and "cluster_sampling" in config["subsampling"]:
-    cluster_names = [w.replace("cluster_profile/clusters/cluster_","").replace(".txt", "") for w in glob.glob("cluster_profile/clusters/cluster_*.txt") if "exclude" not in w]
+if "profile-name" in config and os.path.isdir("{}/clusters/".format(config["profile-name"])) and "cluster" in config['builds'] and "cluster_sampling" in config["subsampling"]:
+    profile_name = config["profile-name"]
+    cluster_names = [w.replace(f"{profile_name}/clusters/cluster_","").replace(".txt", "") for w in glob.glob(f"{profile_name}/clusters/cluster_*.txt") if "exclude" not in w]
+    print("cluster names to be run:", cluster_names)
     for new_clus in cluster_names:
         new_sample_scheme = "cluster_sampling_{}".format(new_clus)
         # use cluster build as 'template' for each individual cluster build
@@ -82,12 +96,47 @@ if os.path.isdir("cluster_profile/clusters/") and "cluster" in config['builds'] 
         config["builds"][new_clus]["subsampling_scheme"] = new_sample_scheme
         config["builds"][new_clus]["title"] = config["builds"]["cluster"]["title"]+" - cluster {}".format(new_clus)        
 
-        # Need to exclude anything in exclude file + anything in the cluster from context sample
-        os.system("cat defaults/exclude.txt cluster_profile/exclude.txt cluster_profile/clusters/cluster_{}.txt > cluster_profile/clusters/cluster_{}_exclude.txt".format(new_clus,new_clus))
+        # Need to exclude anything in exclude file + anything in the cluster from co ntext sample
+        #HACK
+        if profile_name != "cluster_profile":
+            os.system(f"cp cluster_profile/exclude.txt {profile_name}/exclude.txt")
+        os.system(f"cat defaults/exclude.txt {profile_name}/exclude.txt {profile_name}/clusters/cluster_{new_clus}.txt > {profile_name}/clusters/cluster_{new_clus}_exclude.txt")
+        #original - get working!
+        #os.system(f"cat defaults/exclude.txt {profile_name}/exclude.txt {profile_name}/clusters/cluster_{new_clus}.txt > {profile_name}/clusters/cluster_{new_clus}_exclude.txt")
         #make a new subsample scheme for each cluster - excluding that cluster from the non-focal set
         config["subsampling"][new_sample_scheme] = copy.deepcopy(config["subsampling"]["cluster_sampling"])
-        config["subsampling"][new_sample_scheme]["global"]["exclude"] = "--exclude cluster_profile/clusters/cluster_{}_exclude.txt".format(new_clus)
+        config["subsampling"][new_sample_scheme]["global"]["exclude"] = f"--exclude {profile_name}/clusters/cluster_{new_clus}_exclude.txt"
+        
+        #try to include file for excuding in tree building
+        if os.path.isfile(f"{profile_name}/clusters/treeexclude_{new_clus}.txt"):
+            config['builds'][new_clus]["tree_exclude_sites"] = f"--exclude-sites {profile_name}/clusters/treeexclude_{new_clus}.txt"
+        #if dated, use this as max-date
+        import re
+        regex = re.compile(r'\d\d\d\d-\d\d-\d\d$')
+        mo = regex.findall(new_clus)
+        if mo:
+            config["subsampling"][new_sample_scheme]["global"]["max_date"] = f"--max-date {mo[0]}"
     config["builds"].pop("cluster")  # get rid of the 'template' build
+
+# Check for old-style input file references and alert users to the new format.
+if "sequences" in config or "metadata" in config:
+    logger.error("ERROR: Your configuration file includes references to an unsupported specification of input files (e.g., `config['sequences']` or `config['metadata']`).")
+    logger.error("Update your configuration file (e.g., 'builds.yaml') to define your inputs as follows and try running the workflow again:")
+    logger.error(textwrap.indent(
+        f"\ninputs:\n  name: local-data\n  metadata: {config['metadata']}\n  sequences: {config['sequences']}\n",
+        "  "
+    ))
+    sys.exit(1)
+
+# Check for missing inputs.
+if "inputs" not in config:
+    logger.error("ERROR: Your workflow does not define any input files to start with.")
+    logger.error("Update your configuration file (e.g., 'builds.yaml') to define at least one input dataset as follows and try running the workflow again:")
+    logger.error(textwrap.indent(
+        f"\ninputs:\n  name: local-data\n  metadata: data/example_metadata.tsv\n  sequences: data/example_sequences.fasta.gz\n",
+        "  "
+    ))
+    sys.exit(1)
 
 # Allow users to specify a list of active builds from the command line.
 if config.get("active_builds"):
@@ -108,15 +157,15 @@ wildcard_constraints:
     # but not special strings used for Nextstrain builds.
     build_name = r'(?:[_a-zA-Z0-9-.](?!(tip-frequencies)))+',
     date = r"[0-9][0-9][0-9][0-9]-[0-9][0-9]-[0-9][0-9]",
-    origin = r"(_[a-zA-Z0-9-]+)?" # origin starts with an underscore _OR_ it's the empty string
+    origin = r"[a-zA-Z0-9-_]+"
 
-localrules: download_metadata, download_sequences, download, upload, clean
+localrules: clean
 
 # Create a standard ncov build for auspice, by default.
 rule all:
     input:
-        auspice_json = expand("auspice/ncov_{build_name}.json", build_name=BUILD_NAMES),
-        tip_frequency_json = expand("auspice/ncov_{build_name}_tip-frequencies.json", build_name=BUILD_NAMES)
+        auspice_json = expand("auspice/{ext}_{build_name}.json", build_name=BUILD_NAMES,ext=config["auspice_json_prefix"]),
+        tip_frequency_json = expand("auspice/{ext}_{build_name}_tip-frequencies.json", build_name=BUILD_NAMES,ext=config["auspice_json_prefix"])
 
 rule clean:
     message: "Removing directories: {params}"
@@ -136,14 +185,11 @@ rule dump_config:
 
 # Include small, shared functions that help build inputs and parameters.
 include: "workflow/snakemake_rules/common.smk"
+include: "workflow/snakemake_rules/remote_files.smk"
 
 # Include rules to handle primary build logic from multiple sequence alignment
 # to output of auspice JSONs for a default build.
 include: "workflow/snakemake_rules/main_workflow.smk"
-
-# Include rules to allow downloading of input-specific files from s3 buckets.
-# These have to be opted-into via config params.
-include: "workflow/snakemake_rules/download.smk"
 
 # Include a custom Snakefile that specifies `localrules` required by the user's
 # workflow environment.

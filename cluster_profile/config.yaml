@@ -2,6 +2,7 @@ configfile:
   - defaults/parameters.yaml
   - cluster_profile/builds.yaml
   - cluster_profile/cluster-config.yaml
+  - cluster_profile/profile-name.yaml
 
 keep-going: True
 printshellcmds: True

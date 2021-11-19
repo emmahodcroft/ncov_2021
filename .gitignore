@@ -14,6 +14,10 @@ stats.json
 # backups
 backup_data/
 backup_results/
+# Downloaded remote files from sources we expect
+/nextstrain-ncov-private/
+/nextstrain-data/
+/data.nextstrain.org/
 
 # Sensitive environment variables
 environment*
@@ -62,3 +66,6 @@ scripts/developer_scripts/outputs_new_sequences/
 
 # SLURM log files
 slurm-*.out
+
+#scicore submission script
+start_cluster_run.sh

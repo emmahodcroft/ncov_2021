@@ -97,7 +97,6 @@ Crawford County
 Johnson County
 Mason County
 Central District
-Lorena
 Georgetown
 San Ramon
 San Felipe
@@ -128,3 +127,97 @@ Zalesie
 Kowale
 Rosario
 Hardin County
+Miramar
+Delft
+Kostrzyn
+Laranjeiras
+Pamplona
+Rusk County
+DeWitt County
+Huila
+Jesus Maria
+Cumberland County
+Ostrow
+Morrow County
+Bojano
+Hale County
+Hudson County
+Pueblo Nuevo
+Sao Simao
+Zelenec
+Sax
+Jasienica
+Brzezie
+Przeclaw
+Mysliborz
+Sulecin
+Lubrza
+Jasper County
+Anderson County
+Wólka
+Mafra
+Breda
+Ensenada
+San Miguel
+Colon
+Brezovica
+Galapagos
+Gora
+Trinity County
+Santa Cruz
+San Lorenzo
+Santana
+Cumberland County
+Hancock County
+Liberty County
+York County
+Suffolk County
+Lot
+Wojnowice
+Leczyca
+Marica
+San Cristobal
+San Antonio
+Retiro
+Newton County
+Blount County
+Lens
+El Empalme
+Saint Gilles
+Zaragoza
+Hill County
+Paraiso
+Queluz
+Viana
+Florence County
+Sierra County
+Horry County
+Frederick County
+Pulaski County
+Richmond County
+Cherokee County
+Mansa
+Moreno
+Przylesie
+Palencia
+Argenteuil
+Harrison County
+Salem County
+Gloucester County
+Chester County
+Flores
+Benton County
+Santiago
+Santa Clara
+Canela
+Hlohovec
+Caceres
+Klickitat County
+Pacific County
+Chickasaw County
+Pribyslavice
+Campo Largo
+Sao Goncalo do Amarante
+Bristol County
+Worcester County
+Hillsborough County

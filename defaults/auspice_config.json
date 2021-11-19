@@ -6,8 +6,8 @@
   ],
   "colorings": [
     {
-      "key": "subclade_membership",
-      "title": "Emerging Clade",
+      "key": "emerging_lineage",
+      "title": "Emerging Lineage",
       "type": "categorical"
     },
     {
@@ -19,6 +19,21 @@
       "key": "GISAID_clade",
       "title": "GISAID Clade",
       "type": "categorical"
+    },
+    {
+      "key": "S1_mutations",
+      "title": "S1 mutations",
+      "type": "continuous"
+    },
+    {
+      "key": "logistic_growth",
+      "title": "Logistic growth",
+      "type": "continuous"
+    },
+    {
+      "key": "current_frequency",
+      "title": "Current frequency",
+      "type": "continuous"
     },
     {
       "key": "location",
@@ -97,6 +112,11 @@
       "key": "region_exposure",
       "title": "Region of exposure",
       "type": "categorical"
+    },
+    {
+      "key": "epiweek",
+      "title": "Epiweek (CDC)",
+      "type": "continuous"
     }
   ],
   "geo_resolutions": [
@@ -115,16 +135,18 @@
   "filters": [
     "recency",
     "clade_membership",
+    "emerging_lineage",
     "region",
     "country",
     "division",
     "location",
     "host",
-    "author"
+    "epiweek"
   ],
   "panels": [
     "tree",
     "map",
-    "entropy"
+    "entropy",
+    "frequencies"
   ]
 }

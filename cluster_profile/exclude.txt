@@ -364,7 +364,10 @@ Canada/QC-L00333784001/2020
 India/GJ-INSACOG-GBRC1538/2020
 India/GJ-INSACOG-GBRC1539/2020
 Brazil/PE-FIOCRUZ-IAM3285/2020
+<<<<<<< HEAD
+=======
 France/PAC-IHU-3957-Nano1/2020
+>>>>>>> master
 France/PAC-IHU-3957_Nano1/2020
 France/PAC-IHU-5143-N1/2021
 France/PAC-IHU-5148-N1/2021
@@ -561,6 +564,7 @@ Netherlands/ZH-EMC-3837/2020
 Netherlands/ZH-EMC-3838/2020
 Netherlands/ZH-EMC-3839/2020
 England/NORT-YYNW7P/2020
+USA/TX-HMH-MCoV-34911/2020
 
 #A bunch of bad ones from the UK, delta but supposedly April 2020
 USA/CA-LACPHL-AF03229/2020
