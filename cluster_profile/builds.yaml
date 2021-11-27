@@ -18,6 +18,7 @@ inputs:
     #metadata: "s3://nextstrain-ncov-private/metadata.tsv.gz"
     metadata: "data/metadata.tsv"
     sequences: "s3://nextstrain-ncov-private/sequences.fasta.gz"
+    #sequences: "data/sequences_gisaid.fasta.gz"
     # ---------------------- NOTE --------------------------
     # PR 550 changed the path of intermediate files on
     # the S3 bucket to include the origin (e.g. _gisaid).

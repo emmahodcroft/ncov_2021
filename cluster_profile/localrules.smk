@@ -151,13 +151,17 @@ rule copy_from_scicore_archive:
     output:
         sequences = "results/filtered_gisaid.fasta.xz",
         metadata = "data/metadata.tsv",
-        mutations = "results/mutation_summary_gisaid.tsv"
+        mutations = "results/mutation_summary_gisaid.tsv",
+        sequence_index = "results/combined_sequence_index.tsv",
+        compressed_seq_ind = "results/combined_sequence_index.tsv.xz"
     conda: config["conda_environment"]
     shell:
         """
         cp ../../roemer0001/ncov-simple/archive/pre-processed/gisaid/mutation_summary.tsv {output.mutations:q}
         cp ../../roemer0001/ncov-simple/archive/pre-processed/metadata.tsv {output.metadata:q}
         cp ../../roemer0001/ncov-simple/archive/pre-processed/gisaid/filtered.fasta.xz {output.sequences:q}
+        cp ../../roemer0001/ncov-simple/archive/pre-processed/sequence_index.tsv {output.sequence_index:q}
+        xz -k -z {output.sequence_index:q}
         """
         #cp ../../roemer0001/ncov-simple/data/gisaid/metadata.tsv {output.metadata:q}
         #xz -kz {output.mutations:q}
@@ -166,8 +170,8 @@ rule copy_from_scicore_archive:
 rule download_for_cluster:
     message: "Downloading metadata and fasta files from S3"
     output:
-        sequences = "results/precomputed-filtered_gisaid.fasta",
-        metadata = "data/downloaded_gisaid.tsv",
+        sequences = "results/filtered_gisaid.fasta.xz",
+        metadata = "data/metadata.tsv",
         mutations = "results/mutation_summary_gisaid.tsv"
         #to_exclude = "results/to-exclude.txt"
         #diagnostics = "results/sequence-diagnostics_gisaid.tsv",
@@ -177,7 +181,7 @@ rule download_for_cluster:
         """
         aws s3 cp s3://nextstrain-ncov-private/mutation-summary.tsv.xz - | xz -cdq > {output.mutations:q}
         aws s3 cp s3://nextstrain-ncov-private/metadata.tsv.gz - | gunzip -cq > {output.metadata:q}
-        aws s3 cp s3://nextstrain-ncov-private/filtered.fasta.xz - | xz -cdq > {output.sequences:q}
+        aws s3 cp s3://nextstrain-ncov-private/filtered.fasta.xz {output.sequences:q}
         """
         #aws s3 cp s3://nextstrain-ncov-private/flagged-sequences_gisaid.tsv.xz - | xz -cdq > {output.flagged:q}
         #aws s3 cp s3://nextstrain-ncov-private/sequence-diagnostics_gisaid.tsv.xz - | xz -cdq > {output.diagnostics:q}
