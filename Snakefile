@@ -109,7 +109,10 @@ if "profile-name" in config and os.path.isdir("{}/clusters/".format(config["prof
         
         #try to include file for excuding in tree building
         if os.path.isfile(f"{profile_name}/clusters/treeexclude_{new_clus}.txt"):
-            config['builds'][new_clus]["tree_exclude_sites"] = f"--exclude-sites {profile_name}/clusters/treeexclude_{new_clus}.txt"
+            config['builds'][new_clus]["tree_exclude_sites_cluster"] = f"{profile_name}/clusters/treeexclude_{new_clus}.txt"
+            config['builds'][new_clus]["tree_exclude_sites"] = f"results/{new_clus}/exclude_sites.txt"
+        else:
+            config['builds'][new_clus]["tree_exclude_sites"] = f"defaults/sites_ignored_for_tree_topology.txt"
         #if dated, use this as max-date
         import re
         regex = re.compile(r'\d\d\d\d-\d\d-\d\d$')

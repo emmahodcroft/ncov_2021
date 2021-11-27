@@ -671,15 +671,26 @@ rule adjust_metadata_regions:
             --output {output.metadata} 2>&1 | tee {log}
         """
 
+rule cat_exclude_sites:
+    input:
+        default= "defaults/sites_ignored_for_tree_topology.txt",
+        cluster_exclude = lambda w: config["builds"][w.build_name]["tree_exclude_sites_cluster"]
+    output:
+        "results/{build_name}/exclude_sites.txt"
+    shell:
+        """
+        cat {input.default} {input.cluster_exclude} > {output}
+        """
+
 rule tree:
     message: "Building tree"
     input:
-        alignment = rules.build_align.output.alignment
+        alignment = rules.build_align.output.alignment,
+        exclude_sites = lambda w: config["builds"][w.build_name]["tree_exclude_sites"]
     output:
         tree = "results/{build_name}/tree_raw.nwk"
     params:
-        args = lambda w: config["tree"].get("tree-builder-args","") if "tree" in config else "",
-        exclude_sites = get_exclude_sites_for_treebuilding_setting
+        args = lambda w: config["tree"].get("tree-builder-args","") if "tree" in config else ""
     log:
         "logs/tree_{build_name}.txt"
     benchmark:
@@ -696,7 +707,7 @@ rule tree:
         augur tree \
             --alignment {input.alignment} \
             --tree-builder-args {params.args} \
-            {params.exclude_sites} \
+            --exclude-sites {input.exclude_sites} \
             --output {output.tree} \
             --nthreads {threads} 2>&1 | tee {log}
         """
