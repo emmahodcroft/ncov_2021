@@ -513,8 +513,8 @@ rule combine_samples:
         Combine and deduplicate FASTAs
         """
     input:
-        sequences=_get_unified_alignment,
-        sequence_index=rules.index_sequences.output.sequence_index,
+        sequences=_get_unified_alignment, #"results/{build_name}/extra_combined_sequences.fasta", 
+        sequence_index=rules.index_sequences.output.sequence_index, #"results/{build_name}/extra_combined_sequences_index.tsv", 
         metadata=_get_unified_metadata,
         include=_get_subsampled_files,
     output:
