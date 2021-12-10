@@ -17,6 +17,11 @@ def _get_path_for_cluster_input(cluster_wildcard):
     if input_file:
         return path_or_url(input_file, keep_local=True)
 
+def _get_path_for_cluster_exclude(cluster_wildcard):
+    input_file = "results/{}_exclude.txt".format(config.get("profile-name", ""), cluster_wildcard)
+
+    if input_file:
+        return path_or_url(input_file, keep_local=True)
 
 rule add_labels:
     message: "Remove extraneous colorings for main build and move frequencies"
@@ -65,6 +70,7 @@ rule finalize_swiss:
 rule extract_cluster:
     input:
         cluster = lambda wildcards: _get_path_for_cluster_input(wildcards.build_name), #"cluster_profile/clusters/cluster_{build_name}.txt",
+        exclude = ancient(lambda wildcards: _get_path_for_cluster_exclude(wildcards.build_name)),
         alignment = _get_unified_alignment
     output:
         cluster_sample = "results/{build_name}/sample-precluster.fasta"
@@ -74,11 +80,15 @@ rule extract_cluster:
 
         with open(input.cluster) as fh:
             cluster = set([x.strip() for x in fh.readlines()])
+        
+        with open(input.exclude) as fh:
+            excludes = set([x.strip() for x in fh.readlines()])
+        print(excludes)
 
         seq_out = open(output.cluster_sample, 'w')
         with lzma.open(input.alignment, mode="rt") as fh:
             for s in SeqIO.parse(fh, 'fasta'):
-                if s.id in cluster:
+                if s.id in cluster and s.id not in excludes:
                     SeqIO.write(s, seq_out, 'fasta')
 
         seq_out.close()
