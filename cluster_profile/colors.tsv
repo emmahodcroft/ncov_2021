@@ -1,36 +1,3 @@
-country	Russia	#5E1D9D
-country	Serbia	#4D22AD
-country	Europe	#4530BB
-country	Latvia	#403FC6
-country	Slovakia	#3F51CC
-country	Slovenia	#3F62D0
-country	Poland	#4272CE
-country	Belarus	#4681CA
-country	Estonia	#4B8EC2
-country	Lithuania	#5199B8
-country	Hungary	#58A2AC
-country	Croatia	#60AA9F
-country	France	#69B091
-country	Iceland	#72B584
-country	Norway	#7DB877
-country	Denmark	#89BB6B
-country	Netherlands	#95BD61
-country	Belgium	#A1BE58
-country	Luxembourg	#AEBD50
-country	Germany	#BABC4A
-country	Austria	#C5B945
-country	Switzerland	#D0B441
-country	Italy	#D8AE3E
-country	Spain	#DFA43B
-country	Czech Republic	#E49938
-country	United Kingdom	#E68B35
-country	Ireland	#E67A32
-country	Finland	#E4672E
-country	Sweden	#E1522A
-country	Portugal	#DE3D27
-country	Greece	#DB2823
-
-
 recency	Older	#416DCE
 recency	One month ago	#59A3AA
 recency	One week ago	#84BA6F
@@ -45,3 +12,185 @@ region	Europe	#BBBC49
 region	North America	#E29D39
 region	South America	#E1502A
 
+
+country	Israel	#5E1D9D
+country	Palestine	#5B1DA0
+country	Lebanon	#571EA3
+country	Jordan	#541EA6
+country	Georgia	#501EA9
+country	Iraq	#4E20AB
+country	Armenia	#4D22AD
+country	Saudi Arabia	#4C24B0
+country	Kuwait	#4A27B2
+country	Bahrain	#4929B4
+country	Qatar	#482BB6
+country	Iran	#472EB9
+country	United Arab Emirates	#4530BB
+country	Oman	#4432BD
+country	Uzbekistan	#4335BF
+country	Afghanistan	#4137C2
+country	Kazakhstan	#4039C4
+country	Pakistan	#403CC5
+country	Maldives	#403FC6
+country	Kyrgyzstan	#4042C7
+country	India	#3F45C8
+country	Sri Lanka	#3F48C9
+country	Nepal	#3F4BCA
+country	Bangladesh	#3F4ECB
+country	Myanmar	#3F51CC
+country	Thailand	#3F53CD
+country	Malaysia	#3F56CE
+country	Mongolia	#3E59CF
+country	Singapore	#3E5CD0
+country	China	#3F5FD0
+country	Cambodia	#3F62D0
+country	Vietnam	#4064CF
+country	Hong Kong	#4067CF
+country	Indonesia	#416ACF
+country	Brunei	#416CCE
+country	Taiwan	#426FCE
+country	Philippines	#4272CE
+country	Timor-Leste	#4375CD
+country	South Korea	#4377CD
+country	Japan	#437ACD
+country	French Polynesia	#447DCC
+country	Australia	#457FCB
+country	Papua New Guinea	#4681CA
+country	New Zealand	#4783C8
+country	Fiji	#4785C7
+country	Cabo Verde	#4887C6
+country	Gambia	#4989C4
+country	Senegal	#4A8BC3
+country	Sierra Leone	#4B8EC2
+country	Guinea	#4C90C0
+country	Liberia	#4D92BF
+country	Côte d'Ivoire	#4D94BD
+country	Morocco	#4E96BC
+country	Mali	#5097BA
+country	Burkina Faso	#5199B8
+country	Ghana	#529AB6
+country	Togo	#539CB4
+country	Benin	#549DB2
+country	Algeria	#559FB0
+country	Nigeria	#57A0AE
+country	Tunisia	#58A2AC
+country	Niger	#59A3AA
+country	Equatorial Guinea	#5AA5A8
+country	Gabon	#5BA7A6
+country	Cameroon	#5DA8A3
+country	Republic of the Congo	#5EA9A1
+country	Libya	#60AA9F
+country	Namibia	#61AB9D
+country	Angola	#63AC9A
+country	Chad	#64AD98
+country	Central African Republic	#66AE96
+country	Democratic Republic of the Congo	#67AF94
+country	Botswana	#69B091
+country	South Africa	#6AB18F
+country	Zambia	#6CB28D
+country	Lesotho	#6DB38A
+country	Sudan	#6FB388
+country	South Sudan	#71B486
+country	Zimbabwe	#72B584
+country	Burundi	#74B582
+country	Rwanda	#76B680
+country	Egypt	#78B67E
+country	Eswatini	#7AB77B
+country	Uganda	#7BB879
+country	Malawi	#7DB877
+country	Mozambique	#7FB975
+country	Kenya	#81B973
+country	Ethiopia	#83BA71
+country	Djibouti	#85BA6F
+country	Union of the Comoros	#87BB6D
+country	Madagascar	#89BB6B
+country	Somalia	#8BBB6A
+country	Mauritius	#8DBC68
+country	Iceland	#8FBC66
+country	Portugal	#91BC64
+country	Ireland	#93BC63
+country	Spain	#95BD61
+country	United Kingdom	#97BD5F
+country	Andorra	#99BD5D
+country	France	#9BBE5B
+country	Belgium	#9DBE5A
+country	Netherlands	#9FBE59
+country	Luxembourg	#A1BE58
+country	Monaco	#A3BE56
+country	Switzerland	#A5BE55
+country	Norway	#A8BE54
+country	Denmark	#AABD52
+country	Liechtenstein	#ACBD51
+country	Germany	#AEBD50
+country	Italy	#B0BD4F
+country	Malta	#B2BD4D
+country	Slovenia	#B4BD4C
+country	Sweden	#B6BD4B
+country	Austria	#B8BC4B
+country	Croatia	#BABC4A
+country	Czech Republic	#BCBB49
+country	Bosnia and Herzegovina	#BEBB48
+country	Poland	#C0BB47
+country	Slovakia	#C2BA46
+country	Montenegro	#C4BA46
+country	Albania	#C5B945
+country	Hungary	#C7B944
+country	Serbia	#C9B843
+country	Kosovo	#CBB842
+country	North Macedonia	#CDB642
+country	Greece	#CEB541
+country	Lithuania	#D0B441
+country	Romania	#D1B340
+country	Bulgaria	#D3B240
+country	Latvia	#D4B13F
+country	Estonia	#D5B03F
+country	Finland	#D7AF3E
+country	Belarus	#D8AE3E
+country	Moldova	#DAAD3D
+country	Ukraine	#DBAC3D
+country	Cyprus	#DDAA3C
+country	Turkey	#DDA83C
+country	Azerbaijan	#DEA63B
+country	Russia	#DFA43B
+country	Argentina	#E0A33A
+country	Uruguay	#E1A13A
+country	Chile	#E19F3A
+country	Paraguay	#E29D39
+country	Bolivia	#E39B39
+country	Brazil	#E49938
+country	Peru	#E59738
+country	Ecuador	#E59537
+country	Colombia	#E69337
+country	Suriname	#E69036
+country	Guyana	#E68D36
+country	Venezuela	#E68B35
+country	Trinidad and Tobago	#E68835
+country	Bonaire	#E68534
+country	Curacao	#E68234
+country	Aruba	#E67F33
+country	Panama	#E67D33
+country	Costa Rica	#E67A32
+country	Grenada	#E67732
+country	Saint Vincent and the Grenadines	#E67431
+country	Barbados	#E67130
+country	El Salvador	#E56E30
+country	Saint Lucia	#E56A2F
+country	Honduras	#E4672E
+country	Dominica	#E4632E
+country	Guatemala	#E3602D
+country	Guadeloupe	#E35C2C
+country	Belize	#E2592C
+country	Antigua and Barbuda	#E2552B
+country	Saint Kitts and Nevis	#E1522A
+country	Saint Barthélemy	#E04E2A
+country	Sint Maarten	#E04B29
+country	Saint Martin	#DF4728
+country	Jamaica	#DF4428
+country	Dominican Republic	#DF4027
+country	Haiti	#DE3D27
+country	Mexico	#DE3926
+country	Cuba	#DD3625
+country	Bahamas	#DD3325
+country	Bermuda	#DC2F24
+country	USA	#DC2C23
+country	Canada	#DB2823
