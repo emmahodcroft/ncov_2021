@@ -26,7 +26,8 @@ def _get_path_for_cluster_exclude(cluster_wildcard):
 rule add_labels:
     message: "Remove extraneous colorings for main build and move frequencies"
     input:
-        auspice_json = rules.incorporate_travel_history.output.auspice_json,
+        #auspice_json = rules.incorporate_travel_history.output.auspice_json,
+        auspice_json = rules.include_hcov19_prefix.output.auspice_json,
         tree = rules.refine.output.tree,
         clades = rules.clades.output.clade_data,
         mutations = rules.ancestral.output.node_data
@@ -142,7 +143,7 @@ rule filter_cluster:
 rule copy_from_scicore:
     message: "copying files from Cornelius' runs"
     output:
-        sequences = "results/filtered_gisaid.fasta.xz",
+        sequences = "results/dfiltered_gisaid.fasta.xz",
         metadata = "data/metadata.tsv",
         mutations = "results/mutation_summary_gisaid.tsv"
     conda: config["conda_environment"]
@@ -159,7 +160,7 @@ rule copy_from_scicore:
 rule copy_from_scicore_archive:
     message: "copying files from Cornelius' runs - the archive"
     output:
-        sequences = "results/filtered_gisaid.fasta.xz",
+        sequences = "results/dfiltered_gisaid.fasta.xz",
         metadata = "data/metadata.tsv",
         mutations = "results/mutation_summary_gisaid.tsv",
         sequence_index = "results/combined_sequence_index.tsv",
@@ -180,9 +181,10 @@ rule copy_from_scicore_archive:
 rule download_for_cluster:
     message: "Downloading metadata and fasta files from S3"
     output:
-        sequences = "results/filtered_gisaid.fasta.xz",
+        sequences = "results/dfiltered_gisaid.fasta.xz",
         metadata = "data/metadata.tsv",
-        mutations = "results/mutation_summary_gisaid.tsv"
+        mutations = "results/mutation_summary_gisaid.tsv",
+        aligned = "results/aligned_gisaid.fasta.xz"
         #to_exclude = "results/to-exclude.txt"
         #diagnostics = "results/sequence-diagnostics_gisaid.tsv",
         #flagged = "results/flagged-sequences_gisaid.tsv",
@@ -192,6 +194,7 @@ rule download_for_cluster:
         aws s3 cp s3://nextstrain-ncov-private/mutation-summary.tsv.xz - | xz -cdq > {output.mutations:q}
         aws s3 cp s3://nextstrain-ncov-private/metadata.tsv.gz - | gunzip -cq > {output.metadata:q}
         aws s3 cp s3://nextstrain-ncov-private/filtered.fasta.xz {output.sequences:q}
+        aws s3 cp s3://nextstrain-ncov-private/aligned.fasta.xz {output.aligned:q}
         """
         #aws s3 cp s3://nextstrain-ncov-private/flagged-sequences_gisaid.tsv.xz - | xz -cdq > {output.flagged:q}
         #aws s3 cp s3://nextstrain-ncov-private/sequence-diagnostics_gisaid.tsv.xz - | xz -cdq > {output.diagnostics:q}
