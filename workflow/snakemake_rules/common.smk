@@ -28,12 +28,81 @@ def numeric_date(dt=None):
 def _get_subsampling_scheme_by_build_name(build_name):
     return config["builds"][build_name].get("subsampling_scheme", build_name)
 
-def _get_filter_value(wildcards, key):
-    default = config["filter"].get(key, "")
-    if wildcards["origin"] == "":
-        return default
-    return config["filter"].get(wildcards["origin"], {}).get(key, default)
+def _get_skipped_inputs_for_diagnostic(wildcards):
+    """Build an argument for the diagnostic script with a list of inputs to skip.
+    """
+    inputs = config["inputs"]
+    diagnostics_key = "skip_diagnostics"
 
+    arg_parts = []
+    for input_name in inputs.keys():
+        skip_diagnostics = config["filter"].get(diagnostics_key, False)
+
+        if input_name in config["filter"] and diagnostics_key in config["filter"][input_name]:
+            skip_diagnostics = config["filter"][input_name][diagnostics_key]
+
+        if skip_diagnostics:
+            arg_parts.append(input_name)
+
+    if len(arg_parts) > 0:
+        argument = f"--skip-inputs {' '.join(arg_parts)}"
+    else:
+        argument = ""
+
+    return argument
+
+#def _get_filter_value(wildcards, key):
+#    default = config["filter"].get(key, "")
+#    if wildcards["origin"] == "":
+#        return default
+#    return config["filter"].get(wildcards["origin"], {}).get(key, default)
+
+def _get_filter_min_length_query(wildcards):
+    """Build a sequence length filter query for each input, checking for
+    input-specific length requirements.
+    """
+    inputs = config["inputs"]
+    length_key = "min_length"
+
+    query_parts = []
+    for input_name in inputs.keys():
+        min_length = config["filter"][length_key]
+
+        if input_name in config["filter"] and length_key in config["filter"][input_name]:
+            min_length = config["filter"][input_name][length_key]
+
+        # We only annotate input-specific columns on metadata when there are
+        # multiple inputs.
+        if len(inputs) > 1:
+            # Input names can contain characters that make them invalid Python
+            # variable names. As such, we escape the column names with backticks
+            # as recommended by pandas:
+            #
+            # https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.query.html
+            #
+            # We escape the backticks with backslashes to prevent the bash shell
+            # from expanding the contents between the backticks as a subprocess.
+            query_parts.append(f"(\`{input_name}\` == 'yes' & _length >= {min_length})")
+        else:
+            query_parts.append(f"(_length >= {min_length})")
+
+    query = " | ".join(query_parts)
+    return f"--query \"{query}\""
+
+def _get_filter_value(wildcards, key):
+    for input_name in config["inputs"].keys():
+        if input_name in config["filter"] and key in config["filter"][input_name]:
+            print(
+                f"ERROR: We no longer support input-specific filtering with the '{key}' parameter.",
+                "Remove this parameter from your configuration file and try running the workflow again.",
+                file=sys.stderr,
+            )
+            sys.exit(1)
+
+    return config["filter"].get(key, "")
+
+
+####
 def _get_path_for_input(stage, origin_wildcard):
     """
     A function called to define an input for a Snakemake rule
@@ -64,9 +133,13 @@ def _get_unified_metadata(wildcards):
         return "results/sanitized_metadata_{origin}.tsv.xz".format(origin=list(config["inputs"].keys())[0])
     return "results/combined_metadata.tsv.xz"
 
+#def _get_unified_alignment(wildcards):
+#    if len(list(config["inputs"].keys()))==1:
+#        return _get_path_for_input("filtered", list(config["inputs"].keys())[0])
+#    return "results/combined_sequences_for_subsampling.fasta.xz",
 def _get_unified_alignment(wildcards):
     if len(list(config["inputs"].keys()))==1:
-        return _get_path_for_input("filtered", list(config["inputs"].keys())[0])
+        return _get_path_for_input("aligned", list(config["inputs"].keys())[0])
     return "results/combined_sequences_for_subsampling.fasta.xz",
 
 def _get_metadata_by_build_name(build_name):
