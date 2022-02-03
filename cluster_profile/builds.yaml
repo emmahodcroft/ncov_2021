@@ -33,6 +33,7 @@ inputs:
     # sequence-diagnostic: "s3://nextstrain-ncov-private/sequence-diagnostics_gisaid.tsv.xz"
     #filtered: "s3://nextstrain-ncov-private/filtered_gisaid.fasta.xz"
     filtered: "results/filtered_gisaid.fasta.xz"
+    masked: "results/aligned_gisaid.fasta.xz"
 
 
 # Define locations for which builds should be created.
@@ -108,7 +109,7 @@ subsampling:
     global:
       #max_date: "--max-date 2020-11-30"
       group_by: "year month region"
-      seq_per_group: 30
+      seq_per_group: 10
       priorities:
         type: "proximity"
         focus: "cluster"
@@ -163,4 +164,4 @@ refine:
   coalescent: "opt"
   date_inference: "marginal"
   divergence_unit: "mutations"
-  clock_filter_iqd: 4
+  clock_filter_iqd: 8

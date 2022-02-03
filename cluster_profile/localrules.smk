@@ -17,11 +17,17 @@ def _get_path_for_cluster_input(cluster_wildcard):
     if input_file:
         return path_or_url(input_file, keep_local=True)
 
+def _get_path_for_cluster_exclude(cluster_wildcard):
+    input_file = "results/{}_exclude.txt".format(config.get("profile-name", ""), cluster_wildcard)
+
+    if input_file:
+        return path_or_url(input_file, keep_local=True)
 
 rule add_labels:
     message: "Remove extraneous colorings for main build and move frequencies"
     input:
-        auspice_json = rules.incorporate_travel_history.output.auspice_json,
+        #auspice_json = rules.incorporate_travel_history.output.auspice_json,
+        auspice_json = rules.include_hcov19_prefix.output.auspice_json,
         tree = rules.refine.output.tree,
         clades = rules.clades.output.clade_data,
         mutations = rules.ancestral.output.node_data
@@ -65,6 +71,7 @@ rule finalize_swiss:
 rule extract_cluster:
     input:
         cluster = lambda wildcards: _get_path_for_cluster_input(wildcards.build_name), #"cluster_profile/clusters/cluster_{build_name}.txt",
+        exclude = ancient(lambda wildcards: _get_path_for_cluster_exclude(wildcards.build_name)),
         alignment = _get_unified_alignment
     output:
         cluster_sample = "results/{build_name}/sample-precluster.fasta"
@@ -74,11 +81,15 @@ rule extract_cluster:
 
         with open(input.cluster) as fh:
             cluster = set([x.strip() for x in fh.readlines()])
+        
+        with open(input.exclude) as fh:
+            excludes = set([x.strip() for x in fh.readlines()])
+        print(excludes)
 
         seq_out = open(output.cluster_sample, 'w')
         with lzma.open(input.alignment, mode="rt") as fh:
             for s in SeqIO.parse(fh, 'fasta'):
-                if s.id in cluster:
+                if s.id in cluster and s.id not in excludes:
                     SeqIO.write(s, seq_out, 'fasta')
 
         seq_out.close()
@@ -132,7 +143,7 @@ rule filter_cluster:
 rule copy_from_scicore:
     message: "copying files from Cornelius' runs"
     output:
-        sequences = "results/filtered_gisaid.fasta.xz",
+        sequences = "results/dfiltered_gisaid.fasta.xz",
         metadata = "data/metadata.tsv",
         mutations = "results/mutation_summary_gisaid.tsv"
     conda: config["conda_environment"]
@@ -149,7 +160,7 @@ rule copy_from_scicore:
 rule copy_from_scicore_archive:
     message: "copying files from Cornelius' runs - the archive"
     output:
-        sequences = "results/filtered_gisaid.fasta.xz",
+        sequences = "results/dfiltered_gisaid.fasta.xz",
         metadata = "data/metadata.tsv",
         mutations = "results/mutation_summary_gisaid.tsv",
         sequence_index = "results/combined_sequence_index.tsv",
@@ -170,9 +181,10 @@ rule copy_from_scicore_archive:
 rule download_for_cluster:
     message: "Downloading metadata and fasta files from S3"
     output:
-        sequences = "results/filtered_gisaid.fasta.xz",
+        sequences = "results/dfiltered_gisaid.fasta.xz",
         metadata = "data/metadata.tsv",
-        mutations = "results/mutation_summary_gisaid.tsv"
+        mutations = "results/mutation_summary_gisaid.tsv",
+        aligned = "results/aligned_gisaid.fasta.xz"
         #to_exclude = "results/to-exclude.txt"
         #diagnostics = "results/sequence-diagnostics_gisaid.tsv",
         #flagged = "results/flagged-sequences_gisaid.tsv",
@@ -182,6 +194,7 @@ rule download_for_cluster:
         aws s3 cp s3://nextstrain-ncov-private/mutation-summary.tsv.xz - | xz -cdq > {output.mutations:q}
         aws s3 cp s3://nextstrain-ncov-private/metadata.tsv.gz - | gunzip -cq > {output.metadata:q}
         aws s3 cp s3://nextstrain-ncov-private/filtered.fasta.xz {output.sequences:q}
+        aws s3 cp s3://nextstrain-ncov-private/aligned.fasta.xz {output.aligned:q}
         """
         #aws s3 cp s3://nextstrain-ncov-private/flagged-sequences_gisaid.tsv.xz - | xz -cdq > {output.flagged:q}
         #aws s3 cp s3://nextstrain-ncov-private/sequence-diagnostics_gisaid.tsv.xz - | xz -cdq > {output.diagnostics:q}

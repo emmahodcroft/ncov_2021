@@ -89,6 +89,9 @@ if "profile-name" in config and os.path.isdir("{}/clusters/".format(config["prof
     profile_name = config["profile-name"]
     cluster_names = [w.replace(f"{profile_name}/clusters/cluster_","").replace(".txt", "") for w in glob.glob(f"{profile_name}/clusters/cluster_*.txt") if "exclude" not in w]
     print("cluster names to be run:", cluster_names)
+    #only make combined exclude (defaults & cluster) file if needed (otherwise snakemake wants to rerun early steps every time):
+    if not os.path.exists(f"results/{profile_name}_exclude.txt"):
+        os.system(f"cat defaults/exclude.txt {profile_name}/exclude.txt > results/{profile_name}_exclude.txt")
     for new_clus in cluster_names:
         new_sample_scheme = "cluster_sampling_{}".format(new_clus)
         # use cluster build as 'template' for each individual cluster build
@@ -109,7 +112,10 @@ if "profile-name" in config and os.path.isdir("{}/clusters/".format(config["prof
         
         #try to include file for excuding in tree building
         if os.path.isfile(f"{profile_name}/clusters/treeexclude_{new_clus}.txt"):
-            config['builds'][new_clus]["tree_exclude_sites"] = f"--exclude-sites {profile_name}/clusters/treeexclude_{new_clus}.txt"
+            config['builds'][new_clus]["tree_exclude_sites_cluster"] = f"{profile_name}/clusters/treeexclude_{new_clus}.txt"
+            config['builds'][new_clus]["tree_exclude_sites"] = f"results/{new_clus}/exclude_sites.txt"
+        else:
+            config['builds'][new_clus]["tree_exclude_sites"] = f"defaults/sites_ignored_for_tree_topology.txt"
         #if dated, use this as max-date
         import re
         regex = re.compile(r'\d\d\d\d-\d\d-\d\d$')
