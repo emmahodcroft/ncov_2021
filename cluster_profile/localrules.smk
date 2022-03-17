@@ -183,19 +183,19 @@ rule download_for_cluster:
     output:
         sequences = "results/dfiltered_gisaid.fasta.xz",
         metadata = "data/metadata.tsv",
-        mutations = "results/mutation_summary_gisaid.tsv",
         aligned = "results/aligned_gisaid.fasta.xz"
+        #mutations = "results/mutation_summary_gisaid.tsv",
         #to_exclude = "results/to-exclude.txt"
         #diagnostics = "results/sequence-diagnostics_gisaid.tsv",
         #flagged = "results/flagged-sequences_gisaid.tsv",
     conda: config["conda_environment"]
     shell:
         """
-        aws s3 cp s3://nextstrain-ncov-private/mutation-summary.tsv.xz - | xz -cdq > {output.mutations:q}
         aws s3 cp s3://nextstrain-ncov-private/metadata.tsv.gz - | gunzip -cq > {output.metadata:q}
         aws s3 cp s3://nextstrain-ncov-private/filtered.fasta.xz {output.sequences:q}
         aws s3 cp s3://nextstrain-ncov-private/aligned.fasta.xz {output.aligned:q}
         """
+        #aws s3 cp s3://nextstrain-ncov-private/mutation-summary.tsv.xz - | xz -cdq > {output.mutations:q}
         #aws s3 cp s3://nextstrain-ncov-private/flagged-sequences_gisaid.tsv.xz - | xz -cdq > {output.flagged:q}
         #aws s3 cp s3://nextstrain-ncov-private/sequence-diagnostics_gisaid.tsv.xz - | xz -cdq > {output.diagnostics:q}
         #aws s3 cp s3://nextstrain-ncov-private/to-exclude.txt.xz - | xz -cdq > {output.to_exclude:q}
