@@ -90,6 +90,14 @@ mask:
   # These are 1-indexed coordinates of sites that have been identified as prone to sequencing errors.
   mask_sites: "21987 15521"
 
+# When choosing contextual samples for a focal set, applying crowding penalty
+# will help reduce the number of genetically identical strains that get chosen,
+# and allows for more diversity represented on the tree.
+# Emma - found that 0.5 is best if have all focal & want to see context around them
+# 0.1 is better if you want to find more closely realted - like more of an outbreak you may not have
+priorities:
+  crowding_penalty: 0.5
+
 # Depending on how you define focal and contextual inputs, the same strains may
 # appear in both inputs. This option tells the workflow not to throw an error
 # when duplicates occur but to accept the first instance of a given strain's
