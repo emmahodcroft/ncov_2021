@@ -109,7 +109,10 @@ if "profile-name" in config and os.path.isdir("{}/clusters/".format(config["prof
         #make a new subsample scheme for each cluster - excluding that cluster from the non-focal set
         config["subsampling"][new_sample_scheme] = copy.deepcopy(config["subsampling"]["cluster_sampling"])
         config["subsampling"][new_sample_scheme]["global"]["exclude"] = f"--exclude {profile_name}/clusters/cluster_{new_clus}_exclude.txt"
-        
+        #if there's also a context in sampling scheme, also exclude focal cluster seqs from these!
+        if "context" in config["subsampling"][new_sample_scheme]:
+            config["subsampling"][new_sample_scheme]["context"]["exclude"] = f"--exclude {profile_name}/clusters/cluster_{new_clus}_exclude.txt"
+
         #try to include file for excuding in tree building
         if os.path.isfile(f"{profile_name}/clusters/treeexclude_{new_clus}.txt"):
             config['builds'][new_clus]["tree_exclude_sites_cluster"] = f"{profile_name}/clusters/treeexclude_{new_clus}.txt"
