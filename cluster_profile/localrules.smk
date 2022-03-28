@@ -181,7 +181,7 @@ rule copy_from_scicore_archive:
 rule download_for_cluster:
     message: "Downloading metadata and fasta files from S3"
     output:
-        sequences = "results/dfiltered_gisaid.fasta.xz",
+        #sequences = "results/dfiltered_gisaid.fasta.xz",
         metadata = "data/metadata.tsv",
         aligned = "results/aligned_gisaid.fasta.xz"
         #mutations = "results/mutation_summary_gisaid.tsv",
@@ -192,9 +192,9 @@ rule download_for_cluster:
     shell:
         """
         aws s3 cp s3://nextstrain-ncov-private/metadata.tsv.gz - | gunzip -cq > {output.metadata:q}
-        aws s3 cp s3://nextstrain-ncov-private/filtered.fasta.xz {output.sequences:q}
         aws s3 cp s3://nextstrain-ncov-private/aligned.fasta.xz {output.aligned:q}
         """
+        #aws s3 cp s3://nextstrain-ncov-private/filtered.fasta.xz {output.sequences:q}
         #aws s3 cp s3://nextstrain-ncov-private/mutation-summary.tsv.xz - | xz -cdq > {output.mutations:q}
         #aws s3 cp s3://nextstrain-ncov-private/flagged-sequences_gisaid.tsv.xz - | xz -cdq > {output.flagged:q}
         #aws s3 cp s3://nextstrain-ncov-private/sequence-diagnostics_gisaid.tsv.xz - | xz -cdq > {output.diagnostics:q}
