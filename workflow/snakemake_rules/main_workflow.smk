@@ -613,6 +613,7 @@ rule build_align:
         insertions = "results/{build_name}/insertions.tsv",
         translations = expand("results/{{build_name}}/translations/aligned.gene.{gene}.fasta", gene=config.get('genes', ['S']))
     params:
+        output_translations = lambda w: f"results/{w.build_name}/translations/aligned.gene.{{gene}}.fasta",
         outdir = "results/{build_name}/translations",
         genes = ','.join(config.get('genes', ['S'])),
         basename = "aligned"
@@ -626,17 +627,18 @@ rule build_align:
         mem_mb=3000
     shell:
         """
-        xz -c -d {input.sequences} | nextalign \
+        xz -c -d {input.sequences} | nextalign run \
             --jobs={threads} \
             --reference {input.reference} \
             --genemap {input.genemap} \
             --genes {params.genes} \
-            --sequences /dev/stdin \
-            --output-dir {params.outdir} \
-            --output-basename {params.basename} \
+            --output-translations {params.output_translations} \
             --output-fasta {output.alignment} \
             --output-insertions {output.insertions} > {log} 2>&1
         """
+        #            --sequences /dev/stdin \  ##removed in nextalign 2.0
+        #    --output-all {params.outdir} \
+        #    --output-basename {params.basename} \
 
 rule mask:
     message:

@@ -14,6 +14,10 @@
     {
         "mem": "32G"
     },
+    "sanitize_metadata":
+    {
+        "mem": "128G"
+    },
     "refine" :
     {
         "time" : "23:59:00",

@@ -3,11 +3,11 @@ localrules: colors, download_for_cluster
 
 ruleorder: finalize_swiss > finalize
 ruleorder: filter_cluster > subsample
-ruleorder: copy_from_scicore_archive > filter
+#ruleorder: copy_from_scicore_archive > filter
 ruleorder: rename_subclades_birds > rename_subclades
-ruleorder: copy_from_scicore > download_for_cluster
-ruleorder: copy_from_scicore_archive > download_for_cluster
-ruleorder: copy_from_scicore_archive > copy_from_scicore
+#ruleorder: copy_from_scicore > download_for_cluster
+#ruleorder: copy_from_scicore_archive > download_for_cluster
+#ruleorder: copy_from_scicore_archive > copy_from_scicore
 #ruleorder: download_masked > mask
 #ruleorder: download_masked > diagnostic
 
@@ -116,6 +116,13 @@ rule extract_cluster_2:
         """
 
 rule filter_cluster:
+    message:
+        """
+        Do custom cluster filtering for build '{wildcards.build_name}' with the following parameters:
+         - metadata: {input.metadata}
+         - sequences: {input.sequences}
+         - include: {input.include}
+        """
     input:
         sequences = rules.extract_cluster.output.cluster_sample,
         metadata = _get_unified_metadata,
@@ -140,43 +147,43 @@ rule filter_cluster:
         """
         #cp {input.cluster:q} {output.cluster:q}
 
-rule copy_from_scicore:
-    message: "copying files from Cornelius' runs"
-    output:
-        sequences = "results/dfiltered_gisaid.fasta.xz",
-        metadata = "data/metadata.tsv",
-        mutations = "results/mutation_summary_gisaid.tsv"
-    conda: config["conda_environment"]
-    shell:
-        """
-        cp ../../roemer0001/ncov-simple/pre-processed/gisaid/mutation_summary.tsv {output.mutations:q}
-        cp ../../roemer0001/ncov-simple/data/gisaid/metadata.tsv {output.metadata:q}
-        cp ../../roemer0001/ncov-simple/pre-processed/gisaid/filtered.fasta.xz {output.sequences:q}
-        """
-        #cp ../../roemer0001/ncov-simple/data/gisaid/metadata.tsv {output.metadata:q}
-        #xz -kz {output.mutations:q}
-        #xz -kz {output.metadata:q}
+#rule copy_from_scicore:
+#    message: "copying files from Cornelius' runs"
+#    output:
+#        sequences = "results/dfiltered_gisaid.fasta.xz",
+#        metadata = "data/metadata.tsv",
+#        mutations = "results/mutation_summary_gisaid.tsv"
+#    conda: config["conda_environment"]
+#    shell:
+#        """
+#        cp ../../roemer0001/ncov-simple/pre-processed/gisaid/mutation_summary.tsv {output.mutations:q}
+#        cp ../../roemer0001/ncov-simple/data/gisaid/metadata.tsv {output.metadata:q}
+#        cp ../../roemer0001/ncov-simple/pre-processed/gisaid/filtered.fasta.xz {output.sequences:q}
+#        """
+#        #cp ../../roemer0001/ncov-simple/data/gisaid/metadata.tsv {output.metadata:q}
+#        #xz -kz {output.mutations:q}
+#        #xz -kz {output.metadata:q}
 
-rule copy_from_scicore_archive:
-    message: "copying files from Cornelius' runs - the archive"
-    output:
-        sequences = "results/dfiltered_gisaid.fasta.xz",
-        metadata = "data/metadata.tsv",
-        mutations = "results/mutation_summary_gisaid.tsv",
-        sequence_index = "results/combined_sequence_index.tsv",
-        compressed_seq_ind = "results/combined_sequence_index.tsv.xz"
-    conda: config["conda_environment"]
-    shell:
-        """
-        cp ../../roemer0001/ncov-simple/archive/pre-processed/gisaid/mutation_summary.tsv {output.mutations:q}
-        cp ../../roemer0001/ncov-simple/archive/pre-processed/metadata.tsv {output.metadata:q}
-        cp ../../roemer0001/ncov-simple/archive/pre-processed/gisaid/filtered.fasta.xz {output.sequences:q}
-        cp ../../roemer0001/ncov-simple/archive/pre-processed/sequence_index.tsv {output.sequence_index:q}
-        xz -k -z {output.sequence_index:q}
-        """
-        #cp ../../roemer0001/ncov-simple/data/gisaid/metadata.tsv {output.metadata:q}
-        #xz -kz {output.mutations:q}
-        #xz -kz {output.metadata:q}
+#rule copy_from_scicore_archive:
+#    message: "copying files from Cornelius' runs - the archive"
+#    output:
+#        sequences = "results/dfiltered_gisaid.fasta.xz",
+#        metadata = "data/metadata.tsv",
+#        mutations = "results/mutation_summary_gisaid.tsv",
+#        sequence_index = "results/combined_sequence_index.tsv",
+#        compressed_seq_ind = "results/combined_sequence_index.tsv.xz"
+#    conda: config["conda_environment"]
+#    shell:
+#        """
+#        cp ../../roemer0001/ncov-simple/archive/pre-processed/gisaid/mutation_summary.tsv {output.mutations:q}
+#        cp ../../roemer0001/ncov-simple/archive/pre-processed/metadata.tsv {output.metadata:q}
+#        cp ../../roemer0001/ncov-simple/archive/pre-processed/gisaid/filtered.fasta.xz {output.sequences:q}
+#        cp ../../roemer0001/ncov-simple/archive/pre-processed/sequence_index.tsv {output.sequence_index:q}
+#        xz -k -z {output.sequence_index:q}
+#        """
+#        #cp ../../roemer0001/ncov-simple/data/gisaid/metadata.tsv {output.metadata:q}
+#        #xz -kz {output.mutations:q}
+#        #xz -kz {output.metadata:q}
 
 rule download_for_cluster:
     message: "Downloading metadata and fasta files from S3"
