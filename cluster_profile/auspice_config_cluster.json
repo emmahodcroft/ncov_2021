@@ -37,6 +37,11 @@
       "type": "categorical"
     },
     {
+      "key": "Nextclade_pango",
+      "title": "Nextclade Pango Lineage",
+      "type": "categorical"
+    },
+    {
       "key": "legacy_clade_membership",
       "title": "Old Nextstrain clades",
       "type": "categorical"
@@ -128,7 +133,8 @@
     "division",
     "location",
     "host",
-    "pango_lineage"
+    "pango_lineage",
+    "Nextclade_pango"
   ],
   "panels": [
     "tree",

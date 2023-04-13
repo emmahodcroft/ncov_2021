@@ -44,8 +44,9 @@
         "mem": "32G"
     },
     "proximity_score":{
-        "time" : "05:59:00",
-        "qos": "6hours",
-        "mem": "20G"
+        "time" : "23:59:00",
+        "qos": "1day",
+        "n" : 1,
+        "mem": "64G"
     }
 }
