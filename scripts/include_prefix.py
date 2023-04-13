@@ -1,5 +1,7 @@
 import argparse
 import json
+import sys
+sys.setrecursionlimit(100000)
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(
@@ -49,4 +51,4 @@ if __name__ == '__main__':
         modified_tip_frequencies_json = tip_frequencies_json
 
     with open(args.output_tip_frequencies, 'w') as f:
-        json.dump(modified_tip_frequencies_json, f, indent=2)
+        json.dump(modified_tip_frequencies_json, f, indent=None)

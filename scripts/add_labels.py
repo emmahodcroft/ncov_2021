@@ -2,6 +2,8 @@ import argparse
 import json
 from Bio import Phylo
 from collections import defaultdict
+import sys
+sys.setrecursionlimit(100000)
 
 def attach_labels(d, labeled_nodes):
     if "children" in d:

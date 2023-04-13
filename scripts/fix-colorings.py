@@ -3,6 +3,8 @@ import json
 import re
 from numpy import linspace
 from math import floor
+import sys
+sys.setrecursionlimit(100000)
 
 def adjust_coloring_for_epiweeks(dataset):
     """
@@ -86,4 +88,4 @@ if __name__ == '__main__':
     adjust_coloring_for_epiweeks(input_json)
 
     with open(args.output, 'w') as f:
-        json.dump(input_json, f, indent=2)
+        json.dump(input_json, f, indent=None)

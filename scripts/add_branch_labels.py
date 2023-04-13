@@ -2,6 +2,8 @@ import argparse
 import json
 from Bio import Phylo
 from collections import defaultdict
+import sys
+sys.setrecursionlimit(100000)
 
 def extract_spike_mutations(node_data):
     data = {}
@@ -60,4 +62,4 @@ if __name__ == '__main__':
     attach_labels(auspice_json["tree"])
 
     with open(args.output, 'w') as f:
-        json.dump(auspice_json, f, indent=2)
+        json.dump(auspice_json, f, indent=None)
