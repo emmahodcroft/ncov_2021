@@ -3,75 +3,12 @@
 
 # About
 
-This repository analyzes viral genomes using [Nextstrain](https://nextstrain.org) to understand how SARS-CoV-2, the virus that is responsible for the COVID-19 pandemic, evolves and spreads.
+This branch is a frozen version of the `ncov_2021` master branch used for the Alpha & Delta cluster introductions to Switzerland analysis.
+The `ncov_2021` master branch is the copy of the Nextstrain `ncov` pipeline used by Emma Hodcroft to create cluster-focused builds, primarily for CoVariants.
 
-We maintain a number of publicly-available builds, visible at [nextstrain.org/ncov](https://nextstrain.org/ncov).
+Almost all code used for the Alpha & Delta introduction analysis (to generate the phylogenies) is the same, with a couple of exceptions:
+- `scripts/reduceMetadata.py` was used to reduce the `metadata.tsv` which is one of the starting files of analysis to only have sequences with dates prior to 31 Aug 2021, since our analysis focuses only prior to this period. This reduces the size of the file and simply makes the rest of the pipeline more efficient
+- `scripts/checkDatesOfMetadata.py` to check the above script works properly, this script outputs the min & max dates of the before & after metadata files
 
-[See our change log for details about backwards-incompatible or breaking changes to the workflow](https://docs.nextstrain.org/projects/ncov/en/latest/reference/change_log.html).
+- `scripts/priorities.py` Main change. This adds an `exclusion_penalty` (of -10000) to the priority scores of half of the possible context sequences, essentially downsampling the global context sequences by half. This simulates a scenario where the rest of the world (exlcuding Switerland) had done half as much sequencing.
 
-# Resources
-
-## Use Nextstrain to analyze your SARS-CoV-2 data
-
-**We've written a comprehensive guide to get you up and running in <1 hr. Click on the below links to follow it. It covers:**
-
-0. [**Introduction**](https://nextstrain.github.io/ncov/index) _(Start here)_
-1. [**Setup and installation**](https://nextstrain.github.io/ncov/setup)
-2. [**Preparing your data**](https://nextstrain.github.io/ncov/data-prep)
-3. [**Orientation: analysis workflow**](https://nextstrain.github.io/ncov/orientation-workflow)
-4. [**Orientation: which files should I touch?**](https://nextstrain.github.io/ncov/orientation-files)
-5. [**Running & troubleshooting**](https://nextstrain.github.io/ncov/running)
-6. [**Customizing your analysis**](https://nextstrain.github.io/ncov/customizing-analysis) (see also: [reference for all configuration parameters](https://nextstrain.github.io/ncov/configuration))
-7. [**Customizing your visualization**](https://nextstrain.github.io/ncov/customizing-visualization)
-8. [**Options for visualizing and sharing results**](https://nextstrain.github.io/ncov/sharing) (including working with sensitive metadata)
-9. [**Interpreting your results**](https://nextstrain.github.io/ncov/interpretation)
-10. [**Writing a narrative to highlight key findings**](https://nextstrain.github.io/ncov/narratives)
-11. [**Running the pipeline starting with multiple inputs**](https://nextstrain.github.io/ncov/multiple_inputs)
-
-## Reference guides
-
-  - [Metadata field definitions](metadata-fields.md)
-  - [Workflow configuration parameters](configuration.md)
-
-## Download formatted datasets
-
-The hCoV-19 / SARS-CoV-2 genomes were generously shared via GISAID. We gratefully acknowledge the Authors, Originating and Submitting laboratories of the genetic sequence and metadata made available through GISAID on which this research is based.
-
-In order to download the GISAID data to run the analysis yourself, please see [this guide](https://nextstrain.github.io/ncov/data-prep).
-> Please note that `data/metadata.tsv` is no longer included as part of this repo. However, we provide continually-updated, pre-formatted metadata & fasta files for download through GISAID.
-
-## Read previous Situation Reports
-We issued weekly Situation Reports for the first ~5 months of the pandemic. You can find the Reports and their translations [here](https://nextstrain.org/ncov-sit-reps).
-
-## FAQs
-
-- Can't find your sequences in Nextstrain? Check [here](./docs/data_faq.md) for common reasons why your sequences may not be appearing.
-You can also use [clades.nextstrain.org](https://clades.nextstrain.org/) to perform some basic quality control on your sequences. If they are flagged by this tool, they will likely be excluded by our pipeline.
-- For information about how clades are defined, and the currently named clades, please see [here](./docs/naming_clades.md). To assign clades to your own sequences, you can use our clade assignment tool at [clades.nextstrain.org](https://clades.nextstrain.org/).
-
-## Bioinformatics notes
-
-Site numbering and genome structure uses [Wuhan-Hu-1/2019](https://www.ncbi.nlm.nih.gov/nuccore/MN908947) as reference. The phylogeny is rooted relative to early samples from Wuhan. Temporal resolution assumes a nucleotide substitution rate of [8 &times; 10^-4 subs per site per year](http://virological.org/t/phylodynamic-analysis-176-genomes-6-mar-2020/356). There were SNPs present in the nCoV samples in the first and last few bases of the alignment that were masked as likely sequencing artifacts.
-
-# Contributing
-
-We welcome contributions from the community! Please note that we strictly adhere to the [Contributor Covenant Code of Conduct](https://github.com/nextstrain/.github/blob/master/CODE_OF_CONDUCT.md).
-
-### Contributing to software or documentation
-Please see our [Contributor Guide](https://github.com/nextstrain/.github/blob/master/CONTRIBUTING.md) to get started!
-
-### Contributing data
-**Please note that we automatically pick up any SARS-CoV-2 data that is submitted to GISAID.**
-
-If you're a lab and you'd like to get started sequencing, please see:
-* [Protocols from the ARTIC network](https://www.protocols.io/groups/artic/publications)
-* [Funding opportunities for sequencing efforts](https://twitter.com/firefoxx66/status/1242147905768751106)
-* Or, if these don't meet your needs, [get in touch](mailto:hello@nextstrain.org)
-
----
-
-# Get in touch
-
-To report a bug, error, or feature request, please [open an isssue](https://github.com/nextstrain/ncov/issues).
-
-For questions, head over to the [discussion board](https://discussion.nextstrain.org/); we're happy to help!
