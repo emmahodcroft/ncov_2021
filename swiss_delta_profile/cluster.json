@@ -1,0 +1,43 @@
+{
+    "__default__" :
+    {
+        "time" : "05:59:00",
+        "qos": "6hours",
+        "n" : 1,
+        "mem": "32G"
+    },
+    "sanitize_metadata":
+    {
+        "mem": "64G"
+    },
+    "ancestral":
+    {
+        "mem": "32G"
+    },
+    "refine" :
+    {
+        "time" : "23:59:00",
+        "qos": "1day",
+        "n" : 1,
+        "mem": "64G"
+    },
+    "tree" : {
+        "n": 24,
+        "qos": "1day",
+        "mem": "64G",
+        "time" : "23:59:00"
+    },
+    "build_align": {
+        "n" : 8,
+        "mem": "8G"
+    },
+    "aa_muts_explicit": {
+        "n" : 1,
+        "mem": "32G"
+    },
+    "proximity_score":{
+        "time" : "05:59:00",
+        "qos": "6hours",
+        "mem": "20G"
+    }
+}

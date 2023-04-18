@@ -1,0 +1,129 @@
+# These parameters are only used by the `export_for_nextstrain` rule and shouldn't need to be modified.
+# To modify the s3 _source_ bucket, specify this directly in the `inputs` section of the config.
+# P.S. These are intentionally set as top-level keys as this allows command-line overrides.
+S3_DST_BUCKET: "nextstrain-ncov-private"
+S3_DST_COMPRESSION: "xz"
+S3_DST_ORIGINS: ["gisaid"]
+
+genes: ["ORF1a", "ORF1b", "S", "M", "N"] # "ORF3a" removed because of 21H - has frameshift
+use_nextalign: true
+
+# set profile name to look for correct cluster folder
+profile-name: swiss_delta_profile
+
+# NOTE for shepherds -- there are commented out inputs here, you can
+# uncomment them to start the pipeline at that stage.
+# E.g. if you uncomment `filtered` then the pipeline
+# will start by downloading that file and proceeding straight to
+# subsampling
+inputs:
+  - name: gisaid
+    #metadata: "s3://nextstrain-ncov-private/metadata.tsv.gz"
+    metadata: "data/metadata.tsv"
+    sequences: "s3://nextstrain-ncov-private/sequences.fasta.gz"
+    # ---------------------- NOTE --------------------------
+    # PR 550 changed the path of intermediate files on
+    # the S3 bucket to include the origin (e.g. _gisaid).
+    # Some of these files may not yet exist!
+    # ------------------------------------------------------
+    #metadata: "s3://nextstrain-ncov-private/metadata_gisaid.tsv.gz"
+    # sequences: "s3://nextstrain-ncov-private/sequences_gisaid.fasta.gz"
+    # aligned: "s3://nextstrain-ncov-private/aligned_gisaid.fasta.xz"
+    # to-exclude: "s3://nextstrain-ncov-private/to-exclude_gisaid.txt.xz"
+    # masked: "s3://nextstrain-ncov-private/masked_gisaid.fasta.fasta.xz"
+    # mutation_summary: "s3://nextstrain-ncov-private/mutation_summary_gisaid.tsv.xz"
+    # sequence-diagnostic: "s3://nextstrain-ncov-private/sequence-diagnostics_gisaid.tsv.xz"
+    #filtered: "s3://nextstrain-ncov-private/filtered_gisaid.fasta.xz"
+    filtered: "results/filtered_gisaid.fasta.xz"
+
+
+# Define locations for which builds should be created.
+# For each build we specify a subsampling scheme via an explicit key.
+# If the name of the focal geography differs from the build name this needs to
+# be specified explicity as geographic_name. In addition, we require the
+# geographic scale the build focuses on. Together name and scale serve a look-up
+# in the geo_hierarchy to define region, country, division, etc
+    
+builds:
+  cluster:
+    subsampling_scheme: cluster_sampling
+    geographic_scale: country
+    subclades: "swiss_delta_profile/subclades_EU.tsv"
+    country: Switzerland
+    title: "Phylogenetic analysis of SARS-CoV-2 clusters in their international context"
+
+subsampling:
+
+  # Default subsampling logic for clusters
+  cluster_sampling:
+    # Focal samples for country
+    cluster:
+      group_by: "country year month" # dummy variable - change in localrules
+      max_sequences: 9000 # dummy variable - change in localrules -- for this build, there is no limit
+    # contextual samples as random background
+    global:
+      group_by: "year month"
+      max_sequences: 200
+    # Contextual samples from globe
+    context:
+      max_date: "--max-date 2021-07-31"
+      min_date: "--min-date 2021-03-01"
+      # this is for swiss runs with more priority, and a max-seqs
+      #group_by: "year month" #trying this commented out to allow closest sequences overall
+      max_sequences: 10000
+      query: "--exclude-where 'country=Switzerland'"
+      priorities:
+        type: "proximity"
+        focus: "cluster"
+
+  # Default subsampling logic for divisions
+  canton:
+    # Focal samples for division
+    division:
+      group_by: "year month"
+      seq_per_group: 300
+      exclude: "--exclude-where 'region!={region}' 'country!={country}' 'division!={division}'"
+    # Contextual samples from division's country
+    country:
+      group_by: "division year month"
+      seq_per_group: 20
+      exclude: "--exclude-where 'region!={region}' 'country!={country}' 'division={division}'"
+      priorities:
+        type: "proximity"
+        focus: "division"
+    # Contextual samples from division's region
+    region:
+      group_by: "country year month"
+      seq_per_group: 10
+      exclude: "--exclude-where 'region!={region}' 'country={country}'"
+      priorities:
+        type: "proximity"
+        focus: "division"
+    # Contextual samples from the rest of the world, excluding the current
+    # division to avoid resampling.
+    global:
+      group_by: "country year month"
+      seq_per_group: 5
+      exclude: "--exclude-where 'region={region}'"
+      priorities:
+        type: "proximity"
+        focus: "division"
+
+files:
+  colors: "cluster_profile/colors.tsv"
+  auspice_config: "cluster_profile/auspice_config_cluster.json"
+  description: "cluster_profile/description.md"
+  include: "cluster_profile/include.txt"
+  subclades: "cluster_profile/bird_clades.tsv"
+  # exclude file is constructed from defaults/exclude.txt cluster_profile/exclude.txt and the list of seqs in the clusters
+  # see Snakefile line 79
+
+# TreeTime settings
+refine:
+  root: "Wuhan/Hu-1/2019 Wuhan/WH01/2019" #EPI_ISL_402125  EPI_ISL_406798
+  clock_rate: 0.0008
+  clock_std_dev: 0.0004
+  coalescent: "opt"
+  date_inference: "marginal"
+  divergence_unit: "mutations"
+  clock_filter_iqd: 8

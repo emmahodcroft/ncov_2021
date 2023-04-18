@@ -1,0 +1,2 @@
+
+localrules: "swiss_delta_profile/localrules.smk"
