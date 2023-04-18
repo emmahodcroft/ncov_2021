@@ -19,16 +19,18 @@ if __name__ == '__main__':
     parser.add_argument("--output", type=str, required=True, help="tsv file with the priorities")
     args = parser.parse_args()
 
+    fraction_kept = 0.5
     proximities = pd.read_csv(args.proximities, sep='\t', index_col=0)
     index = pd.read_csv(args.sequence_index, sep='\t', index_col=0)
     combined = pd.concat([proximities, index], axis=1)
+    combined['exclusion_penalty'] = (np.random.random(size=len(combined))>fraction_kept)*10000
 
     closest_matches = combined.groupby('closest strain')
     candidates = {}
     for focal_seq, seqs in closest_matches.groups.items():
-        tmp = combined.loc[seqs, ["distance", "N"]]
+        tmp = combined.loc[seqs, ["distance", "N", 'exclusion_penalty']]
         # penalize larger distances and more undetermined sites. 1/args.Nweight are 'as bad' as one extra mutation
-        tmp["priority"] = -tmp.distance - tmp.N*args.Nweight
+        tmp["priority"] = -tmp.distance - tmp.N*args.Nweight - tmp.exclusion_penalty
         name_prior = [(name, d.priority) for name, d in tmp.iterrows()]
         shuffle(name_prior)
         candidates[focal_seq] = sorted(name_prior, key=lambda x:x[1], reverse=True)
