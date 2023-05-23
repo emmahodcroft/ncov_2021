@@ -862,6 +862,7 @@ rule refine:
             --divergence-unit {params.divergence_unit} \
             --date-confidence \
             --no-covariance \
+            --stochastic-resolve \
             --clock-filter-iqd {params.clock_filter_iqd} 2>&1 | tee {log}
         """
 
