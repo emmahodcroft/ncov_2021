@@ -2,12 +2,13 @@ localrules: colors, download_for_cluster
 
 
 ruleorder: finalize_swiss > finalize
+ruleorder: copy_base_files > extract_cluster
+ruleorder: copy_base_files > filter_cluster
+ruleorder: copy_base_files > subsample
+ruleorder: copy_base_files > proximity_score
 ruleorder: filter_cluster > subsample
-ruleorder: copy_from_scicore > filter
 ruleorder: rename_subclades_birds > rename_subclades
-ruleorder: copy_from_scicore > download_for_cluster
-#ruleorder: download_masked > mask
-#ruleorder: download_masked > diagnostic
+
 
 def _get_path_for_cluster_input(cluster_wildcard):
     input_file = "{}/clusters/cluster_{}.txt".format(config.get("profile-name", ""), cluster_wildcard)
@@ -15,6 +16,31 @@ def _get_path_for_cluster_input(cluster_wildcard):
     if input_file:
         return path_or_url(input_file, keep_local=True)
 
+rule copy_base_files:
+    message: "Copy the files that are unchanged between builds to save time"
+    input:
+        f1 = "results/starting_files/Delta/sample-global.fasta",
+        f2 = "results/starting_files/Delta/sample-global.txt",
+        f3 = "results/starting_files/Delta/sample-precluster.fasta",
+        f4 = "results/starting_files/Delta/sample-cluster.fasta",
+        f5 = "results/starting_files/Delta/sample-cluster.txt",
+        f6 = "results/starting_files/Delta/proximity_cluster.tsv",
+    output:
+        f1 = "results/{build_name}/sample-global.fasta",
+        f2 = "results/{build_name}/sample-global.txt",
+        f3 = "results/{build_name}/sample-precluster.fasta",
+        f4 = "results/{build_name}/sample-cluster.fasta",
+        f5 = "results/{build_name}/sample-cluster.txt",
+        f6 = "results/{build_name}/proximity_cluster.tsv",
+    shell:
+        """
+        cp {input.f1} {output.f1}
+        cp {input.f2} {output.f2}
+        cp {input.f3} {output.f3}
+        cp {input.f4} {output.f4}
+        cp {input.f5} {output.f5}
+        cp {input.f6} {output.f6}
+        """
 
 rule add_labels:
     message: "Remove extraneous colorings for main build and move frequencies"
@@ -81,27 +107,6 @@ rule extract_cluster:
 
         seq_out.close()
 
-rule extract_cluster_2:
-    input:
-        cluster = lambda wildcards: _get_path_for_cluster_input(wildcards.build_name), #"cluster_profile/clusters/cluster_{build_name}.txt",
-        metadata = _get_unified_metadata,
-        alignment = _get_unified_alignment,
-        index = rules.index_sequences.output.sequence_index
-    output:
-        cluster_sample = "results/{build_name}/sample-precluster22.fasta"
-    log:
-        "logs/subsample_{build_name}_cluster-extract.txt"
-    conda: config["conda_environment"]
-    shell:
-        """
-        augur filter \
-            --sequences {input.alignment} \
-            --sequence-index {input.index} \
-            --metadata {input.metadata} \
-            --include {input.cluster} \
-            --output {output.cluster_sample} 2>&1 | tee {log}
-        """
-
 rule filter_cluster:
     input:
         sequences = rules.extract_cluster.output.cluster_sample,
@@ -129,23 +134,6 @@ rule filter_cluster:
         # country grouping doesn't make sense here, because all are Swiss!
         #--group-by country year month \
 
-rule copy_from_scicore:
-    message: "copying files from Cornelius' runs"
-    output:
-        sequences = "results/filtered_gisaid.fasta.xz",
-        metadata = "data/metadata.tsv",
-        mutations = "results/mutation_summary_gisaid.tsv"
-    conda: config["conda_environment"]
-    shell:
-        """
-        cp ../../roemer0001/ncov-simple/pre-processed/gisaid/mutation_summary.tsv {output.mutations:q}
-        cp ../../roemer0001/ncov-simple/data/gisaid/metadata.tsv {output.metadata:q}
-        cp ../../roemer0001/ncov-simple/pre-processed/gisaid/filtered.fasta.xz {output.sequences:q}
-        """
-        #xz -kz {output.mutations:q}
-        #xz -kz {output.metadata:q}
-        #xz -cdq ../../roemer0001/ncov-simple/pre-processed/gisaid/filtered.fasta.xz > {output.sequences:q}
-
 rule download_for_cluster:
     message: "Downloading metadata and fasta files from S3"
     output:
@@ -162,11 +150,7 @@ rule download_for_cluster:
         aws s3 cp s3://nextstrain-ncov-private/metadata.tsv.gz - | gunzip -cq > {output.metadata:q}
         aws s3 cp s3://nextstrain-ncov-private/filtered.fasta.xz - | xz -cdq > {output.sequences:q}
         """
-        #aws s3 cp s3://nextstrain-ncov-private/flagged-sequences_gisaid.tsv.xz - | xz -cdq > {output.flagged:q}
-        #aws s3 cp s3://nextstrain-ncov-private/sequence-diagnostics_gisaid.tsv.xz - | xz -cdq > {output.diagnostics:q}
-        #aws s3 cp s3://nextstrain-ncov-private/to-exclude.txt.xz - | xz -cdq > {output.to_exclude:q}
-        #aws s3 cp s3://nextstrain-ncov-private/masked.fasta.xz - | xz -cdq > "results/masked.fasta"
-        #aws s3 cp s3://nextstrain-ncov-private/masked.fasta.xz - | xz -cdq > {output.sequences:q}
+
 
 rule rename_subclades_birds:
     input:
