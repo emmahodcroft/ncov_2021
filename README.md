@@ -1,5 +1,5 @@
-[![GitHub release (latest by date)](https://img.shields.io/github/v/release/nextstrain/ncov)](https://github.com/nextstrain/ncov/releases)
-[![See recent changes](https://img.shields.io/badge/changelog-See%20recent%20changes-blue)](https://docs.nextstrain.org/projects/ncov/en/latest/reference/change_log.html)
+[![DOI](https://zenodo.org/badge/339133771.svg)](https://zenodo.org/badge/latestdoi/339133771)
+<- Release version for manuscript
 
 # About
 
