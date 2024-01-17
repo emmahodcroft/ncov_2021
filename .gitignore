@@ -11,9 +11,16 @@ defaults/colors.tsv
 defaults/colors_*.tsv
 stats.json
 
+# list of focal sequences for each run
+geneva_alpha_profile/clusters/*
+geneva_profile/clusters/*
+
 # backups
+DataBackup-26Apr23/
 backup_data/
 backup_results/
+geneva_profile/GISAID_sequences*
+geneva_profile/all_provided_HUG_meta.tsv
 # Downloaded remote files from sources we expect
 /nextstrain-ncov-private/
 /nextstrain-data/
