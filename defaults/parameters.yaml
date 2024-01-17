@@ -88,7 +88,9 @@ mask:
 
   # Specific sites to mask in the reference genome's coordinates.
   # These are 1-indexed coordinates of sites that have been identified as prone to sequencing errors.
-  mask_sites: "21987 15521"
+  #mask_sites: "21987 15521"
+  #DO NOT mask 21987 for Delta build because it makes clusters show up weird try it.
+  mask_sites: "15521"
 
 # When choosing contextual samples for a focal set, applying crowding penalty
 # will help reduce the number of genetically identical strains that get chosen,
