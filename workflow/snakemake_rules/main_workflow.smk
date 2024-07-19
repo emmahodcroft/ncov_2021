@@ -607,13 +607,15 @@ rule build_align:
         sequences = rules.combine_samples.output.sequences,
         #sequences = rules.filter.output.sequences,
         genemap = config["files"]["annotation"],
-        reference = config["files"]["alignment_reference"]
+        reference = config["files"]["alignment_reference"],
+        nextclade_dataset = "data/sars-cov-2-nextclade-defaults.zip" #downloaded manually (see prepare_nextclade rule in Nextstrain ncov)
     output:
         alignment = "results/{build_name}/aligned.fasta",
-        insertions = "results/{build_name}/insertions.tsv",
+        #insertions = "results/{build_name}/insertions.tsv",
+        nextclade_qc = 'results/{build_name}/nextclade_qc.tsv',
         translations = expand("results/{{build_name}}/translations/aligned.gene.{gene}.fasta", gene=config.get('genes', ['S']))
     params:
-        output_translations = lambda w: f"results/{w.build_name}/translations/aligned.gene.{{gene}}.fasta",
+        output_translations = lambda w: f"results/{w.build_name}/translations/aligned.gene.{{cds}}.fasta",
         outdir = "results/{build_name}/translations",
         genes = ','.join(config.get('genes', ['S'])),
         basename = "aligned"
@@ -627,15 +629,23 @@ rule build_align:
         mem_mb=3000
     shell:
         """
-        xz -c -d {input.sequences} | nextalign run \
+        xz -c -d {input.sequences} | nextclade run \
             --jobs={threads} \
-            --reference {input.reference} \
-            --genemap {input.genemap} \
-            --genes {params.genes} \
+            --input-dataset {input.nextclade_dataset} \
             --output-translations {params.output_translations} \
-            --output-fasta {output.alignment} \
-            --output-insertions {output.insertions} > {log} 2>&1
+            --output-tsv {output.nextclade_qc} \
+            --output-fasta {output.alignment} > {log} 2>&1
         """
+        # Old command using nextalign (2.0)
+        #xz -c -d {input.sequences} | nextalign run \
+        #    --jobs={threads} \
+        #    --reference {input.reference} \
+        #    --genemap {input.genemap} \
+        #    --genes {params.genes} \
+        #    --output-translations {params.output_translations} \
+        #    --output-fasta {output.alignment} \
+        #    --output-insertions {output.insertions} > {log} 2>&1
+        #
         #            --sequences /dev/stdin \  ##removed in nextalign 2.0
         #    --output-all {params.outdir} \
         #    --output-basename {params.basename} \
@@ -953,33 +963,33 @@ rule aa_muts_explicit:
             --output {output.node_data} 2>&1 | tee {log}
         """
 
-rule build_mutation_summary:
-    message: "Summarizing {input.alignment}"
-    input:
-        alignment = rules.build_align.output.alignment,
-        insertions = rules.build_align.output.insertions,
-        translations = rules.build_align.output.translations,
-        reference = config["files"]["alignment_reference"],
-        genemap = config["files"]["annotation"]
-    output:
-        mutation_summary = "results/{build_name}/mutation_summary.tsv"
-    log:
-        "logs/mutation_summary_{build_name}.txt"
-    params:
-        outdir = "results/{build_name}/translations",
-        basename = "aligned"
-    conda: config["conda_environment"]
-    shell:
-        """
-        python3 scripts/mutation_summary.py \
-            --alignment {input.alignment} \
-            --insertions {input.insertions} \
-            --directory {params.outdir} \
-            --basename {params.basename} \
-            --reference {input.reference} \
-            --genemap {input.genemap} \
-            --output {output.mutation_summary} 2>&1 | tee {log}
-        """
+#rule build_mutation_summary:
+#    message: "Summarizing {input.alignment}"
+#    input:
+#        alignment = rules.build_align.output.alignment,
+#        insertions = rules.build_align.output.insertions,
+#        translations = rules.build_align.output.translations,
+#        reference = config["files"]["alignment_reference"],
+#        genemap = config["files"]["annotation"]
+#    output:
+#        mutation_summary = "results/{build_name}/mutation_summary.tsv"
+#    log:
+#        "logs/mutation_summary_{build_name}.txt"
+#    params:
+#        outdir = "results/{build_name}/translations",
+#        basename = "aligned"
+#    conda: config["conda_environment"]
+#    shell:
+#        """
+#        python3 scripts/mutation_summary.py \
+#            --alignment {input.alignment} \
+#            --insertions {input.insertions} \
+#            --directory {params.outdir} \
+#            --basename {params.basename} \
+#            --reference {input.reference} \
+#            --genemap {input.genemap} \
+#            --output {output.mutation_summary} 2>&1 | tee {log}
+#        """
 
 rule distances:
     input:
